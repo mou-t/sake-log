@@ -1,0 +1,70 @@
+:root {
+	/** https://www.fluid-type-scale.com/calculate?minFontSize=16&minWidth=400&minRatio=1.25&maxFontSize=19&maxWidth=1280&maxRatio=1.333&steps=sm%2Cbase%2Cmd%2Clg%2Cxl%2Cxxl%2Cxxxl&baseStep=base&prefix=font-size&decimals=2&useRems=on&remValue=16&previewFont=Inter&previewText=%E6%9C%AC%E6%97%A5%E3%81%AF%E6%99%B4%E5%A4%A9%E3%81%AA%E3%82%8A&previewWidth=1920 **/
+	--font-size-0: clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem);
+	--font-size-1: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
+	--font-size-2: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
+	--font-size-3: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
+	--font-size-4: clamp(1.95rem, 1.56vw + 1.56rem, 2.81rem);
+	/** https://open-props.style/ **/
+	--size-1: clamp(0.5rem, 1vw, 1rem);
+	--size-2: clamp(1rem, 2vw, 1.5rem);
+	--size-3: clamp(1.5rem, 3vw, 2rem);
+	--size-4: clamp(2rem, 4vw, 3rem);
+	--size-5: clamp(4rem, 5vw, 5rem);
+	--size-6: clamp(5rem, 7vw, 7.5rem);
+	--size-7: clamp(7.5rem, 10vw, 10rem);
+	--size-8: clamp(10rem, 20vw, 15rem);
+	--size-9: clamp(15rem, 30vw, 20rem);
+	--size-10: clamp(20rem, 40vw, 30rem);
+	--font-lineheight-00: 0.95;
+	--font-lineheight-0: 1.1;
+	--font-lineheight-1: 1.25;
+	--font-lineheight-2: 1.375;
+	--font-lineheight-3: 1.5;
+	--font-lineheight-4: 1.75;
+	--font-lineheight-5: 2;
+}
+
+*,
+::before,
+::after {
+	box-sizing: border-box;
+}
+
+:where(html) {
+	-moz-text-size-adjust: none;
+	-webkit-text-size-adjust: none;
+	text-size-adjust: none;
+}
+
+:where(body) {
+	min-block-size: 100%;
+	max-inline-size: 1000px;
+	margin: 0;
+	margin-inline: auto;
+	word-break: break-word;
+	font-size: var(--font-size-1);
+	padding: var(--size-2) var(--size-1);
+}
+
+:where(img, svg, video) {
+	display: block;
+	max-inline-size: 100%;
+	block-size: auto;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+	line-height: var(--font-lineheight-1);
+}
+
+:where(h1) {
+	font-size: var(--font-size-4);
+}
+
+:where(h2) {
+	font-size: var(--font-size-3);
+}
+
+:where(h3, h4, h5, h6) {
+	font-size: var(--font-size-2);
+}
