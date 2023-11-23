@@ -23,6 +23,7 @@
 
 	img {
 		border-radius: 10px;
+		transition: all 0.7s;
 	}
 
 	img:hover {

@@ -5,7 +5,7 @@
 <header>
 	<a href="/">お酒メモ</a>
 	<nav>
-		<a href="/country">国別</a>
+		<!--<a href="/country">国別</a>-->
 	</nav>
 </header>
 
