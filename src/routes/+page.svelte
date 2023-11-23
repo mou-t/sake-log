@@ -6,8 +6,8 @@
 
 <main>
 	<div class="cards-container">
-		{#each data['ginDb'] as { image, name, id }}
-			<Card title={name} href={`/sake/${id}`} imageSrc={image} />
+		{#each data['sakeList']['contents'] as { id, image, name }}
+			<Card title={name} href={`/sake/${id}`} imageSrc={image.url} />
 		{/each}
 	</div>
 </main>

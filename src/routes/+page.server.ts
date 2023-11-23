@@ -1,7 +1,6 @@
-import type { PageServerLoad } from './$types';
-import { getGinDb } from '$lib/server/notion-client';
+import { getSakeList } from '$lib/server/microcms-client';
 
-export const load: PageServerLoad = async () => {
-	const ginDb = await getGinDb();
-	return { ginDb };
+export const load = async () => {
+	const sakeList = await getSakeList();
+	return { sakeList };
 };
