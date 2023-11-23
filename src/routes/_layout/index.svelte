@@ -2,6 +2,17 @@
 	import './global.css';
 </script>
 
+<svelte:head>
+	<link
+		href="https://genjyuugothic-subsets.mou-t.dev/GenJyuuGothicL-Normal/GenJyuuGothicL-Normal.css"
+		type="text/css"
+		rel="stylesheet"
+	/>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+	<link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+</svelte:head>
+
 <header>
 	<a href="/">お酒メモ</a>
 	<nav>
