@@ -6,6 +6,7 @@
 	--font-size-3: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
 	--font-size-4: clamp(1.95rem, 1.56vw + 1.56rem, 2.81rem);
 	/** https://open-props.style/ **/
+	--size-0: clamp(0.25rem, 0.5vw, 0.5rem);
 	--size-1: clamp(0.5rem, 1vw, 1rem);
 	--size-2: clamp(1rem, 2vw, 1.5rem);
 	--size-3: clamp(1.5rem, 3vw, 2rem);
@@ -39,18 +40,31 @@
 
 :where(body) {
 	min-block-size: 100%;
-	max-inline-size: 1000px;
+	max-inline-size: 1400px;
 	margin: 0;
 	margin-inline: auto;
 	word-break: break-word;
 	font-size: var(--font-size-1);
 	padding: var(--size-2) var(--size-1);
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-2);
 }
 
 :where(img, svg, video) {
 	display: block;
 	max-inline-size: 100%;
 	block-size: auto;
+}
+
+:where(a) {
+	touch-action: manipulation;
+	-webkit-tap-highlight-color: transparent;
+	color: var(--links);
+	text-underline-offset: var(--size--0);
+}
+:where(a:not(:hover)) {
+	text-decoration: none;
 }
 
 :where(h1, h2, h3, h4, h5, h6) {
