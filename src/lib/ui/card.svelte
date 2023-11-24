@@ -1,13 +1,16 @@
 <script lang="ts">
+	import type { HTMLImgAttributes } from 'svelte/elements';
+
 	export let title: string;
 	export let href: string;
 	export let imageSrc: string | undefined;
+	export let imageProps: Omit<HTMLImgAttributes, 'href' | 'alt'> | undefined = undefined;
 </script>
 
 <div class="card">
 	<div class="img-wrapper">
 		<a {href}>
-			<img src={imageSrc} alt={title} />
+			<img src={imageSrc} alt={title} {...imageProps} />
 		</a>
 	</div>
 	<p class="card-title">
