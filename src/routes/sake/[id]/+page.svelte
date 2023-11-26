@@ -2,11 +2,17 @@
 	import { generateSrc, generateSrcset } from '$lib/utils/microcms-image.js';
 
 	export let data;
+
+	$: srcset = generateSrcset(data.image.url, [
+		[{ w: '360' }, '720w'],
+		[{ w: '720' }, '1440w'],
+		[{ w: '1000' }, '2000w']
+	]);
 </script>
 
 <article>
 	<div class="img-wrapper" style="--view-transition-name: {data.id}">
-		<img src={generateSrc(data.image.url, { w: '2000' })} alt={data.name} />
+		<img src={generateSrc(data.image.url, { w: '1500' })} {srcset} alt={data.name} />
 	</div>
 	<div class="info">
 		<h2>

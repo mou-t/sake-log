@@ -12,7 +12,12 @@
 				title={name}
 				href={`/sake/${id}`}
 				imageSrc={generateSrc(image.url, { w: '300' })}
-				imageProps={{ srcset: generateSrcset(image.url) }}
+				imageSrcset={generateSrcset(image.url, [
+					[{ dpr: '1', w: '300' }, '1x'],
+					[{ dpr: '2', w: '300' }, '2x'],
+					[{ dpr: '3', w: '300' }, '3x'],
+					[{ dpr: '4', w: '300' }, '4x']
+				])}
 				viewTransitionName={id}
 			/>
 		{/each}
