@@ -2,6 +2,8 @@ import { getPlaceHolderImage } from '$lib/server/microcms-client/get-placeholder
 import { getSake } from '$lib/server/microcms-client/sake.js';
 import { error } from '@sveltejs/kit';
 
+export const prerender = true;
+
 export const load = async ({ params }) => {
 	try {
 		const sake = await getSake(params.id);
