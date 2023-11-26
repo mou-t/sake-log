@@ -5,7 +5,7 @@
 </script>
 
 <article>
-	<div class="img-wrapper">
+	<div class="img-wrapper" style="--view-transition-name: {data.id}">
 		<img src={generateSrc(data.image.url, { w: '2000' })} alt={data.name} />
 	</div>
 	<div class="info">
@@ -31,5 +31,6 @@
 	img {
 		aspect-ratio: 3/4;
 		width: 100%;
+		view-transition-name: var(--view-transition-name);
 	}
 </style>

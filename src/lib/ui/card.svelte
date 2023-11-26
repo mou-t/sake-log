@@ -5,10 +5,11 @@
 	export let href: string;
 	export let imageSrc: string | undefined;
 	export let imageProps: Omit<HTMLImgAttributes, 'href' | 'alt'> | undefined = undefined;
+	export let viewTransitionName: string | undefined = undefined;
 </script>
 
 <div class="card">
-	<div class="img-wrapper">
+	<div class="img-wrapper" style="--view-transition-name: {viewTransitionName}">
 		<a {href}>
 			<img src={imageSrc} alt={title} {...imageProps} />
 		</a>
@@ -31,6 +32,7 @@
 		object-fit: cover;
 		border-radius: 10px;
 		transition: all 0.7s;
+		view-transition-name: var(--view-transition-name);
 	}
 
 	img:hover {
