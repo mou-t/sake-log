@@ -11,7 +11,10 @@
 </script>
 
 <article>
-	<div class="img-wrapper" style="--view-transition-name: {data.id}">
+	<div
+		class="img-wrapper"
+		style="--view-transition-name: {data.id}; --bg-image: url({data.placeholder})"
+	>
 		<img src={generateSrc(data.image.url, { w: '1500' })} {srcset} alt={data.name} />
 	</div>
 	<div class="info">
@@ -38,5 +41,8 @@
 		aspect-ratio: 3/4;
 		width: 100%;
 		view-transition-name: var(--view-transition-name);
+		background-image: var(--bg-image);
+		background-repeat: no-repeat;
+		background-size: cover;
 	}
 </style>
