@@ -25,6 +25,14 @@
 			{data.name}
 		</h2>
 		<p>国： {data.country.japanese}</p>
+		<div>
+			<p>関連リンク</p>
+			<ul>
+				{#each data.link as link}
+					<li><a href={link.link} target="_blank">{link.link}</a></li>
+				{/each}
+			</ul>
+		</div>
 	</div>
 </article>
 

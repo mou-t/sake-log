@@ -6,7 +6,7 @@ const endpoint = 'sake';
 type Sake = {
 	name: string;
 	image: MicroCMSImage;
-	link: { fieldId: 'link'; link: 'https://opihr.com/' }[];
+	link: { fieldId: 'link'; link: string }[];
 	country: { japanese: string; english: string } & MicroCMSListContent;
 };
 
