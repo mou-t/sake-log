@@ -1,9 +1,13 @@
 <script lang="ts">
 	import Card from '$lib/ui/card.svelte';
+	import { MetaTags } from 'svelte-meta-tags';
+
 	import { generateSrc, generateSrcset } from '$lib/utils/microcms-image.js';
 
 	export let data;
 </script>
+
+<MetaTags title="お酒メモ" />
 
 <main>
 	<div class="cards-container">

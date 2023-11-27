@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { generateSrc, generateSrcset } from '$lib/utils/microcms-image.js';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	export let data;
 
@@ -9,6 +10,8 @@
 		[{ w: '1000' }, '2000w']
 	]);
 </script>
+
+<MetaTags title={data.name} titleTemplate="%s | お酒メモ" />
 
 <article>
 	<div
