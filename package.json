@@ -21,7 +21,6 @@
 		"eslint-plugin-svelte": "^2.30.0",
 		"prettier": "^3.0.0",
 		"prettier-plugin-svelte": "^3.0.0",
-		"sharp": "^0.32.6",
 		"svelte": "^4.0.5",
 		"svelte-check": "^3.6.0",
 		"tslib": "^2.4.1",
@@ -30,7 +29,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"microcms-js-sdk": "^2.7.0",
-		"plaiceholder": "^3.0.0"
+		"microcms-js-sdk": "^2.7.0"
 	}
 }
