@@ -10,6 +10,6 @@ export const load = async ({ params }) => {
 		const base64 = await getPlaceHolderBase64(sake.image.url);
 		return { ...sake, placeholder: base64 };
 	} catch (e) {
-		throw error(404, 'Not found');
+		error(404, 'Not found');
 	}
 };
