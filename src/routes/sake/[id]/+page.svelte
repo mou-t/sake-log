@@ -14,13 +14,10 @@
 <MetaTags title={data.name} titleTemplate="%s | お酒メモ" />
 
 <article>
-	<div
-		class="img-wrapper"
-		style="--view-transition-name: {data.id}; --bg-image: url({data.placeholder})"
-	>
+	<div style="--view-transition-name: {data.id}; --bg-image: url({data.placeholder})">
 		<img src={generateSrc(data.image.url, { w: '1500' })} {srcset} alt={data.name} />
 	</div>
-	<div class="info">
+	<div>
 		<h2>
 			{data.name}
 		</h2>
@@ -42,8 +39,7 @@
 		flex-wrap: wrap;
 	}
 
-	.img-wrapper,
-	.info {
+	article > * {
 		margin: 0 auto;
 		width: var(--size-10);
 	}
