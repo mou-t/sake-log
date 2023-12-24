@@ -1,5 +1,5 @@
 import type { MicroCMSImage, MicroCMSListContent, MicroCMSQueries } from 'microcms-js-sdk';
-import { cliet } from './client';
+import { client } from './client';
 
 const endpoint = 'sake';
 
@@ -11,9 +11,9 @@ type Sake = {
 };
 
 export const getSakeList = async (queries?: MicroCMSQueries) => {
-	return cliet.getList<Sake>({ endpoint, queries });
+	return client.getList<Sake>({ endpoint, queries });
 };
 
 export const getSake = async (contentId: string, queries?: MicroCMSQueries) => {
-	return cliet.getListDetail<Sake>({ endpoint, contentId, queries });
+	return client.getListDetail<Sake>({ endpoint, contentId, queries });
 };
