@@ -1,0 +1,37 @@
+---
+import { gridImage, transitionName } from '../lib/image';
+import { countryName, gridLabel } from '../lib/sake-view';
+import type { SakeEntry } from '../lib/types';
+
+interface Props {
+	entries: SakeEntry[];
+}
+
+const { entries } = Astro.props;
+---
+
+<div class="grid">
+	{
+		entries.map((entry, index) => {
+			const photo = entry.image?.url ? gridImage(entry.image.url) : null;
+			return (
+				<a
+					class:list={['cell', `tone-${index % 3}`, { 'has-photo': Boolean(photo) }]}
+					href={`/sake/${entry.id}`}
+					aria-label={`${entry.name}、${countryName(entry)}`}
+					transition:name={transitionName(entry.id)}
+				>
+					{photo ? (
+						<img class="photo" src={photo.src} srcset={photo.srcset} sizes={photo.sizes} alt="" />
+					) : (
+						<span class="silhouette" />
+					)}
+					<span class="cell-label" aria-hidden="true">
+						{gridLabel(entry.name)}
+					</span>
+					<span class="sr-only">{countryName(entry)}</span>
+				</a>
+			);
+		})
+	}
+</div>

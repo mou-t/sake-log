@@ -1,0 +1,16 @@
+---
+interface Props {
+	primary: string;
+	secondary?: string;
+}
+
+const { primary, secondary = '' } = Astro.props;
+---
+
+<div class="bottle" aria-hidden="true">
+	<div class="bottle-neck"></div>
+	<div class="bottle-card">
+		<span class="bottle-mark">{primary}</span>
+		{secondary && <span class="bottle-sub">{secondary}</span>}
+	</div>
+</div>

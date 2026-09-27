@@ -1,0 +1,27 @@
+---
+interface Item {
+	name: string;
+	initial: string;
+	href: string;
+	active: boolean;
+}
+
+interface Props {
+	items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="highlights" aria-label="国">
+	{
+		items.map((item) => (
+			<a class:list={['hl', { active: item.active }]} href={item.href} aria-current={item.active ? 'true' : undefined}>
+				<span class="ring" aria-hidden="true">
+					<span class="bubble">{item.initial}</span>
+				</span>
+				<span class="hl-label">{item.name}</span>
+			</a>
+		))
+	}
+</nav>
