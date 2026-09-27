@@ -1,0 +1,72 @@
+<script is:inline>
+	(function () {
+		function matches(el, country, query) {
+			var name = (el.getAttribute('data-name') || '').toLocaleLowerCase('ja');
+			var itemCountry = el.getAttribute('data-country') || '';
+			var place = (el.getAttribute('data-place') || '').toLocaleLowerCase('ja');
+			var featured = el.getAttribute('data-featured') === 'true';
+			if (country === 'other' && featured) return false;
+			if (country && country !== 'other' && itemCountry !== country) return false;
+			if (!query) return true;
+			return (name + ' ' + itemCountry.toLocaleLowerCase('ja') + ' ' + place).indexOf(query) !== -1;
+		}
+
+		function homeHref(country, view) {
+			var params = new URLSearchParams();
+			if (country) params.set('country', country);
+			if (view === 'list') params.set('view', 'list');
+			var query = params.toString();
+			return query ? '/?' + query : '/';
+		}
+
+		function applyBrowse() {
+			var params = new URLSearchParams(location.search);
+			var country = params.get('country') || '';
+			var query = (params.get('q') || '').trim().toLocaleLowerCase('ja');
+			var view = params.get('view') === 'list' ? 'list' : 'grid';
+
+			document.querySelectorAll('[data-browse]').forEach(function (root) {
+				var mode = root.getAttribute('data-browse');
+				root.querySelectorAll('[data-view]').forEach(function (panel) {
+					panel.hidden = mode === 'home' && panel.getAttribute('data-view') !== view;
+				});
+				var shown = 0;
+				root.querySelectorAll('[data-sake]').forEach(function (el) {
+					var ok = matches(el, country, query);
+					el.hidden = !ok;
+					var panel = el.closest('[data-view]');
+					if (ok && !(panel && panel.hidden)) shown += 1;
+				});
+				var empty = root.querySelector('[data-empty]');
+				if (empty) empty.hidden = shown > 0;
+			});
+
+			document.querySelectorAll('[data-country-link]').forEach(function (link) {
+				var value = link.getAttribute('data-country-link') || '';
+				var active = value === country;
+				link.classList.toggle('active', active);
+				link.setAttribute('href', homeHref(active ? '' : value, view));
+				if (active) link.setAttribute('aria-current', 'true');
+				else link.removeAttribute('aria-current');
+			});
+
+			document.querySelectorAll('[data-view-link]').forEach(function (link) {
+				var value = link.getAttribute('data-view-link') || 'grid';
+				var active = value === view;
+				link.classList.toggle('active', active);
+				link.setAttribute('href', homeHref(country, value));
+				if (active) link.setAttribute('aria-current', 'page');
+				else link.removeAttribute('aria-current');
+			});
+
+			var input = document.getElementById('q');
+			if (input && document.activeElement !== input) input.value = params.get('q') || '';
+		}
+
+		if (!window.__sakeBrowseBound) {
+			window.__sakeBrowseBound = true;
+			document.addEventListener('astro:page-load', applyBrowse);
+		}
+		applyBrowse();
+	})();
+</script>

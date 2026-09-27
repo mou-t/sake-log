@@ -1,0 +1,34 @@
+---
+import { profile } from '../lib/profile';
+
+interface Props {
+	stats: { posts: number; countries: number; years: number };
+}
+
+const { stats } = Astro.props;
+const items = [
+	{ value: stats.posts, label: '投稿' },
+	{ value: stats.countries, label: '国' },
+	{ value: stats.years, label: '年' },
+];
+---
+
+<section class="profile" aria-label="プロフィール">
+	<div class="info-row">
+		<div class="avatar" aria-hidden="true">{profile.avatar}</div>
+		<div class="stats">
+			{
+				items.map((item) => (
+					<div class="stat">
+						<span class="stat-num">{item.value}</span>
+						<span class="stat-label">{item.label}</span>
+					</div>
+				))
+			}
+		</div>
+	</div>
+	<div class="name-block">
+		<h1 class="display-name">{profile.displayName}</h1>
+		<p class="bio">{profile.bio}</p>
+	</div>
+</section>

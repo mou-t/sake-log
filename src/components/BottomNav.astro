@@ -1,0 +1,18 @@
+---
+import Icon from './Icon.astro';
+
+const path = Astro.url.pathname;
+const home = path === '/';
+const search = path === '/search';
+---
+
+<nav class="bottom-nav" aria-label="メイン">
+	<a class="nav-link" href="/" aria-current={home ? 'page' : undefined}>
+		<Icon name="house" size={24} weight={home ? 2.25 : 1.75} />
+		ホーム
+	</a>
+	<a class="nav-link" href="/search" aria-current={search ? 'page' : undefined}>
+		<Icon name="search" size={24} weight={search ? 2.25 : 1.75} />
+		探す
+	</a>
+</nav>

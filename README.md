@@ -1,38 +1,35 @@
-# create-svelte
+# お酒メモ
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Read-only sake log. Astro prerenders two screens from the microCMS `sake` endpoint: an Instagram-style profile (home) and a post detail page.
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+## Run
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
+cp .env.example .env
+npm install
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+`npm run build` writes a static site to `dist/`. `npm run preview` serves that build. `npm run deploy` publishes `dist/` with `wrangler deploy`.
 
-To create a production version of your app:
+## Deploy
 
-```bash
-npm run build
-```
+Host this as [Cloudflare Workers static assets](https://developers.cloudflare.com/workers/static-assets/), not the old Cloudflare Pages project. There is no Worker script and no on-demand rendering. `wrangler.jsonc` points at `./dist`.
 
-You can preview the production build with `npm run preview`.
+[Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/) uses Node.js 24.18.0 by default. Astro 7 requires Node.js `>=22.12.0`, so that default is enough and this repo does not pin `.node-version`.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+
+Set `MICROCMS_DOMAIN` and `MICROCMS_APIKEY` as build environment variables. The build fetches the `sake` endpoint while prerendering. The API key is not sent to the browser. Country chips and 探す filter that prerendered list in the page.
+
+Disconnect the old Pages Git integration. That project still expects `.svelte-kit/cloudflare` and an older Node image, so it will keep failing on this branch.
+
+## Environment
+
+| Variable | Required | Description |
+| --- | --- | --- |
+| `MICROCMS_DOMAIN` | yes, for a production build | Service id — the subdomain of `https://<id>.microcms.io`, not the full URL |
+| `MICROCMS_APIKEY` | yes, for a production build | API key with read access to the `sake` endpoint |
+
+`npm run dev` without those variables renders local sample posts so the layout can be reviewed. A production build does not use that sample data.
