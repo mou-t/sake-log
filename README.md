@@ -14,7 +14,7 @@ npm run dev
 
 ## Deploy
 
-Host this as [Cloudflare Workers static assets](https://developers.cloudflare.com/workers/static-assets/), not the old Cloudflare Pages project. There is no Worker script and no on-demand rendering. `wrangler.jsonc` points at `./dist`.
+Host this as [Cloudflare Workers static assets](https://developers.cloudflare.com/workers/static-assets/), not the old Cloudflare Pages project. There is no Worker script and no on-demand rendering. `wrangler.jsonc` points at `./dist` and runs `npm run build` before `wrangler deploy` or `wrangler versions upload`, so the asset directory exists even when the dashboard build command is empty.
 
 [Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/) uses Node.js 24.18.0 by default. Astro 7 requires Node.js `>=22.12.0`, so that default is enough and this repo does not pin `.node-version`.
 
