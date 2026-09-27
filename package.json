@@ -5,8 +5,9 @@
 	"type": "module",
 	"scripts": {
 		"dev": "astro dev",
-		"build": "astro build && node scripts/publish-pages-output.mjs",
+		"build": "astro build",
 		"preview": "astro preview",
+		"deploy": "wrangler deploy",
 		"check": "astro check",
 		"test": "node --experimental-strip-types --test src/lib/sake-view.test.ts"
 	},
@@ -17,6 +18,7 @@
 	"devDependencies": {
 		"@astrojs/check": "^0.9.10",
 		"@types/node": "^22.15.21",
-		"typescript": "^5.9.3"
+		"typescript": "^5.9.3",
+		"wrangler": "^4.142.0"
 	}
 }
