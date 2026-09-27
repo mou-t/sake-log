@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import { gridImage } from '../lib/image';
-import { countryName } from '../lib/sake-view';
+import { countryHighlights, countryName, placeName } from '../lib/sake-view';
 import type { SakeEntry } from '../lib/types';
 
 interface Props {
@@ -9,20 +9,34 @@ interface Props {
 }
 
 const { entries } = Astro.props;
+const featured = new Set(
+	countryHighlights(entries)
+		.filter((item) => item.country !== 'other')
+		.map((item) => item.country),
+);
 ---
 
-<div class="rows">
+<div class="rows" data-view="list" hidden>
 	{
 		entries.map((entry) => {
 			const photo = entry.image?.url ? gridImage(entry.image.url) : null;
+			const country = countryName(entry);
 			return (
-				<a class="row" href={`/sake/${entry.id}`}>
+				<a
+					class="row"
+					href={`/sake/${entry.id}`}
+					data-sake
+					data-name={entry.name}
+					data-country={country}
+					data-place={placeName(entry) ?? ''}
+					data-featured={featured.has(country) ? 'true' : 'false'}
+				>
 					<span class="thumb">
 						{photo ? <img src={photo.src} alt="" /> : <span class="silhouette" />}
 					</span>
 					<span class="row-copy">
 						<span class="row-name">{entry.name}</span>
-						<span class="row-country">{countryName(entry)}</span>
+						<span class="row-country">{country}</span>
 					</span>
 					<span class="row-chevron">
 						<Icon name="chevron-right" size={18} weight={1.75} />

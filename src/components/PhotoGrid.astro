@@ -1,6 +1,6 @@
 ---
 import { gridImage, transitionName } from '../lib/image';
-import { countryName, gridLabel } from '../lib/sake-view';
+import { countryHighlights, countryName, gridLabel, placeName } from '../lib/sake-view';
 import type { SakeEntry } from '../lib/types';
 
 interface Props {
@@ -8,17 +8,28 @@ interface Props {
 }
 
 const { entries } = Astro.props;
+const featured = new Set(
+	countryHighlights(entries)
+		.filter((item) => item.country !== 'other')
+		.map((item) => item.country),
+);
 ---
 
-<div class="grid">
+<div class="grid" data-view="grid">
 	{
 		entries.map((entry, index) => {
 			const photo = entry.image?.url ? gridImage(entry.image.url) : null;
+			const country = countryName(entry);
 			return (
 				<a
 					class:list={['cell', `tone-${index % 3}`, { 'has-photo': Boolean(photo) }]}
 					href={`/sake/${entry.id}`}
-					aria-label={`${entry.name}、${countryName(entry)}`}
+					aria-label={`${entry.name}、${country}`}
+					data-sake
+					data-name={entry.name}
+					data-country={country}
+					data-place={placeName(entry) ?? ''}
+					data-featured={featured.has(country) ? 'true' : 'false'}
 					transition:name={transitionName(entry.id)}
 				>
 					{photo ? (
@@ -29,7 +40,6 @@ const { entries } = Astro.props;
 					<span class="cell-label" aria-hidden="true">
 						{gridLabel(entry.name)}
 					</span>
-					<span class="sr-only">{countryName(entry)}</span>
 				</a>
 			);
 		})

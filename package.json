@@ -5,13 +5,12 @@
 	"type": "module",
 	"scripts": {
 		"dev": "astro dev",
-		"build": "astro build",
+		"build": "astro build && node scripts/publish-pages-output.mjs",
 		"preview": "astro preview",
 		"check": "astro check",
 		"test": "node --experimental-strip-types --test src/lib/sake-view.test.ts"
 	},
 	"dependencies": {
-		"@astrojs/node": "^11.1.6",
 		"astro": "^7.3.5",
 		"microcms-js-sdk": "^3.5.1"
 	},

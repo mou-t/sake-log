@@ -1,9 +1,7 @@
-import node from '@astrojs/node';
 import { defineConfig, envField } from 'astro/config';
 
 export default defineConfig({
-	output: 'server',
-	adapter: node({ mode: 'standalone' }),
+	output: 'static',
 	prefetch: true,
 	env: {
 		schema: {

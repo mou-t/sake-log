@@ -4,82 +4,72 @@ import Icon from '../../components/Icon.astro';
 import TopBar from '../../components/TopBar.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { heroImage, transitionName } from '../../lib/image';
-import { classifySakeError, getSake, MicrocmsConfigError } from '../../lib/microcms';
+import { getAllSake, MicrocmsConfigError } from '../../lib/microcms';
 import { countryName, heroMark, placeName, presentLinks } from '../../lib/sake-view';
-import type { PresentedLink, SakeEntry } from '../../lib/types';
+import type { SakeEntry } from '../../lib/types';
 
-const id = Astro.params.id;
-let entry: SakeEntry | null = null;
-let failure: 'config' | 'missing' | 'unavailable' | null = id ? null : 'missing';
-
-if (id && !failure) {
+export async function getStaticPaths() {
 	try {
-		entry = await getSake(id);
+		const entries = await getAllSake();
+		return entries.map((entry) => ({
+			params: { id: entry.id },
+			props: { entry },
+		}));
 	} catch (error) {
-		if (error instanceof MicrocmsConfigError) failure = 'config';
-		else failure = classifySakeError(error);
+		if (error instanceof MicrocmsConfigError) return [];
+		throw error;
 	}
 }
 
-if (failure === 'missing') Astro.response.status = 404;
-if (failure === 'config' || failure === 'unavailable') Astro.response.status = 500;
+interface Props {
+	entry: SakeEntry;
+}
 
-const mark = entry ? heroMark(entry.name) : null;
-const photo = entry?.image?.url ? heroImage(entry.image.url) : null;
-const place = entry ? placeName(entry) : undefined;
-const links: PresentedLink[] = entry ? presentLinks(entry.link) : [];
-const failureMessage =
-	failure === 'config'
-		? 'microCMS の環境変数を設定してください'
-		: failure === 'unavailable'
-			? 'コンテンツを読み込めませんでした'
-			: '投稿が見つかりませんでした';
+const { entry } = Astro.props;
+const mark = heroMark(entry.name);
+const photo = entry.image?.url ? heroImage(entry.image.url) : null;
+const place = placeName(entry);
+const links = presentLinks(entry.link);
 ---
 
-<BaseLayout title={entry?.name ?? '投稿'} description={entry?.name ?? '投稿'}>
+<BaseLayout title={entry.name} description={entry.name}>
 	<TopBar backHref="/" title="投稿" />
-	{
-		entry && mark ? (
-			<>
-				<div class="hero" transition:name={transitionName(entry.id)}>
-					{photo ? (
-						<img src={photo.src} srcset={photo.srcset} sizes={photo.sizes} alt="" />
-					) : (
-						<Bottle primary={mark.primary} secondary={mark.secondary} />
-					)}
-				</div>
-				<div class="caption">
-					<h1 class="sake-title">{entry.name}</h1>
-					<div class="chips">
-						<span class="chip">
-							<Icon name="pin" size={12} weight={1.75} />
-							{countryName(entry)}
-						</span>
-						{place && <span class="chip">{place}</span>}
-					</div>
-					<div class="hairline" />
-					<section class="links" aria-labelledby="related-links">
-						<h2 id="related-links" class="links-heading">
-							関連リンク
-						</h2>
-						{links.length === 0 ? (
-							<p class="empty">関連リンクはありません</p>
-						) : (
-							links.map((link) => (
-								<a class="link-row" href={link.href} target="_blank" rel="noopener noreferrer">
-									<span class="link-copy">
-										<span class="link-title">{link.title}</span>
-										<span class="link-sub">{link.subtitle}</span>
-									</span>
-									<Icon name="chevron-right" size={18} weight={1.75} />
-								</a>
-							))
-						)}
-					</section>
-				</div>
-			</>
-		) : (
-			<p class="empty">{failureMessage}</p>
-		)
-	}
+	<div class="hero" transition:name={transitionName(entry.id)}>
+		{
+			photo ? (
+				<img src={photo.src} srcset={photo.srcset} sizes={photo.sizes} alt="" />
+			) : (
+				<Bottle primary={mark.primary} secondary={mark.secondary} />
+			)
+		}
+	</div>
+	<div class="caption">
+		<h1 class="sake-title">{entry.name}</h1>
+		<div class="chips">
+			<span class="chip">
+				<Icon name="pin" size={12} weight={1.75} />
+				{countryName(entry)}
+			</span>
+			{place && <span class="chip">{place}</span>}
+		</div>
+		<div class="hairline"></div>
+		<section class="links" aria-labelledby="related-links">
+			<h2 id="related-links" class="links-heading">関連リンク</h2>
+			{
+				links.length === 0 ? (
+					<p class="empty">関連リンクはありません</p>
+				) : (
+					links.map((link) => (
+						<a class="link-row" href={link.href} target="_blank" rel="noopener noreferrer">
+							<span class="link-copy">
+								<span class="link-title">{link.title}</span>
+								<span class="link-sub">{link.subtitle}</span>
+							</span>
+							<Icon name="chevron-right" size={18} weight={1.75} />
+						</a>
+					))
+				)
+			}
+		</section>
+	</div>
 </BaseLayout>

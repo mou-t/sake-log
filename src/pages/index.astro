@@ -1,5 +1,6 @@
 ---
 import BottomNav from '../components/BottomNav.astro';
+import BrowseFilter from '../components/BrowseFilter.astro';
 import Highlights from '../components/Highlights.astro';
 import PhotoGrid from '../components/PhotoGrid.astro';
 import ProfileHeader from '../components/ProfileHeader.astro';
@@ -9,43 +10,42 @@ import ViewTabs from '../components/ViewTabs.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { loadCatalog } from '../lib/microcms';
 import { profile } from '../lib/profile';
-import { countryHighlights, filterEntries, highlightHref, homeQuery, profileStats } from '../lib/sake-view';
+import { countryHighlights, highlightHref, homeQuery, profileStats } from '../lib/sake-view';
 
-const country = Astro.url.searchParams.get('country');
-const view = Astro.url.searchParams.get('view') === 'list' ? 'list' : 'grid';
 const catalog = await loadCatalog();
 const entries = catalog.ok ? catalog.entries : [];
-const filtered = catalog.ok ? filterEntries(entries, { country }) : [];
 const highlights = countryHighlights(entries).map((item) => ({
 	...item,
-	href: highlightHref(item, { country, view }),
-	active: country === item.country,
+	href: highlightHref(item, { country: null, view: 'grid' }),
+	active: false,
 }));
-
 const emptyMessage = !catalog.ok
 	? catalog.reason === 'config'
 		? 'microCMS の環境変数を設定してください'
 		: 'コンテンツを読み込めませんでした'
 	: entries.length === 0
 		? 'まだ投稿がありません'
-		: filtered.length === 0
-			? '該当するお酒がありません'
-			: null;
+		: null;
 ---
 
 <BaseLayout title={profile.displayName}>
 	<TopBar username={profile.username} />
 	<ProfileHeader stats={profileStats(entries)} />
 	{highlights.length > 0 && <Highlights items={highlights} />}
-	<ViewTabs gridHref={homeQuery({ country, view: 'grid' })} listHref={homeQuery({ country, view: 'list' })} view={view} />
+	<ViewTabs gridHref={homeQuery({ view: 'grid' })} listHref={homeQuery({ view: 'list' })} view="grid" />
 	{
 		emptyMessage ? (
 			<p class="empty">{emptyMessage}</p>
-		) : view === 'list' ? (
-			<SakeRows entries={filtered} />
 		) : (
-			<PhotoGrid entries={filtered} />
+			<div data-browse="home">
+				<PhotoGrid entries={entries} />
+				<SakeRows entries={entries} />
+				<p class="empty" data-empty hidden>
+					該当するお酒がありません
+				</p>
+			</div>
 		)
 	}
 	<BottomNav />
+	<BrowseFilter />
 </BaseLayout>
