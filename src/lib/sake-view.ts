@@ -24,6 +24,12 @@ export function heroMark(name: string) {
 	return { primary: chars[0] ?? '酒', secondary: '' };
 }
 
+/** Two label characters, so a name like 十四代 is not a single 十 on the bottle. */
+export function storyBottleMark(name: string) {
+	const chars = [...gridLabel(name)];
+	return { primary: chars[0] ?? '酒', secondary: chars[1] ?? '' };
+}
+
 export function placeName(entry: SakeEntry) {
 	const country = countryName(entry);
 	const sources: object[] = [entry];

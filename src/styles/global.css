@@ -593,9 +593,14 @@ h1 {
 
 body.story {
 	background: #1f1c19;
+	overflow: hidden;
 }
 
 .shell.story {
+	height: 100dvh;
+	max-height: 100dvh;
+	min-height: 0;
+	overflow: hidden;
 	background: #2a2622;
 	color: #f5f0e8;
 }
@@ -607,7 +612,8 @@ body.story {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	min-height: 100dvh;
+	height: 100%;
+	min-height: 0;
 	overflow: hidden;
 	background: #2a2622;
 	color: var(--story-ink);
@@ -645,9 +651,24 @@ body.story {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	height: 100dvh;
+	height: 100%;
 	min-height: 0;
 	background: #2a2622;
+}
+
+.story-stage {
+	position: relative;
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.story-slide {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
 }
 
 .story-progress {
@@ -782,13 +803,33 @@ body.story {
 }
 
 .story-caption {
+	position: relative;
+	z-index: 4;
 	flex: none;
 	display: flex;
 	flex-direction: column;
-	gap: 4px;
+	gap: 8px;
 	padding: 16px 20px calc(28px + env(safe-area-inset-bottom));
 	background: #2a2622;
 	color: var(--story-ink);
+}
+
+.story-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.story-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 12px;
+	border-radius: 999px;
+	background: #3a3530;
+	color: var(--story-muted);
+	font-size: 12px;
+	font-weight: 500;
 }
 
 .story-sake {
@@ -806,8 +847,8 @@ body.story {
 
 .story-zone {
 	position: absolute;
-	top: 116px;
-	bottom: 128px;
+	top: 0;
+	bottom: 148px;
 	width: min(96px, 28%);
 	z-index: 2;
 	display: grid;

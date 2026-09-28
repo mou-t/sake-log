@@ -2,7 +2,7 @@
 import StoryViewer from '../../../components/StoryViewer.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getAllSake, MicrocmsConfigError } from '../../../lib/microcms';
-import { storyHighlights, storyTarget, type StoryHighlight } from '../../../lib/sake-view';
+import { storyHighlights, type StoryHighlight } from '../../../lib/sake-view';
 import type { SakeEntry } from '../../../lib/types';
 
 export async function getStaticPaths() {
@@ -33,25 +33,8 @@ const story = stories[highlightIndex];
 if (!story) {
 	throw new Error('Missing highlight');
 }
-const cursor = { highlightIndex, slideIndex };
-const prevSlide = storyTarget(stories, cursor, 'prev-slide');
-const nextSlide = storyTarget(stories, cursor, 'next-slide');
-const prevHighlight = storyTarget(stories, cursor, 'prev-highlight');
-const nextHighlight = storyTarget(stories, cursor, 'next-highlight');
 ---
 
 <BaseLayout title={story.name} description={entry.name} story>
-	<StoryViewer
-		name={story.name}
-		initial={story.initial}
-		index={slideIndex + 1}
-		count={story.entries.length}
-		entry={entry}
-		prevSlideHref={prevSlide.href}
-		nextHref={nextSlide.href ?? '/'}
-		prevHighlightHref={prevHighlight.href}
-		nextHighlightHref={nextHighlight.href}
-		prevHighlightName={prevHighlight.name}
-		nextHighlightName={nextHighlight.name}
-	/>
+	<StoryViewer stories={stories} highlightIndex={highlightIndex} slideIndex={slideIndex} />
 </BaseLayout>

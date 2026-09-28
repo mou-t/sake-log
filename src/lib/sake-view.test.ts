@@ -14,6 +14,7 @@ import {
 	placeName,
 	presentLinks,
 	profileStats,
+	storyBottleMark,
 	storyHighlights,
 	storyTarget,
 } from './sake-view.ts';
@@ -129,6 +130,11 @@ describe('sake view', () => {
 		);
 		assert.equal(storyTarget(stories, { highlightIndex: 3, slideIndex: 0 }, 'next-slide').href, '/');
 		assert.equal(storyTarget(stories, { highlightIndex: 3, slideIndex: 0 }, 'next-highlight').href, null);
+		assert.equal(stories[0]?.entries[4]?.name, '十四代');
+		assert.deepEqual(storyBottleMark('十四代'), { primary: '十', secondary: '四' });
+		assert.deepEqual(storyBottleMark('作'), { primary: '作', secondary: '' });
+		assert.ok(stories.every((story) => story.entries.every((entry) => entry.id && entry.name)));
+		assert.equal(placeName(stories[0]?.entries[0]!), '山口県');
 		assert.deepEqual(moveStory([2, 0, 3], { highlightIndex: 0, slideIndex: 1 }, 'next-slide'), {
 			type: 'go',
 			highlightIndex: 2,

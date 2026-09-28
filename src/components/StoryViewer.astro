@@ -1,65 +1,46 @@
 ---
 import Bottle from './Bottle.astro';
 import Icon from './Icon.astro';
-import { heroImage, transitionName } from '../lib/image';
-import { heroMark } from '../lib/sake-view';
-import type { SakeEntry } from '../lib/types';
+import { heroImage } from '../lib/image';
+import {
+	countryName,
+	highlightStoryHref,
+	placeName,
+	storyBottleMark,
+	storyTarget,
+	type StoryHighlight,
+} from '../lib/sake-view';
 
 interface Props {
-	name: string;
-	initial: string;
-	index: number;
-	count: number;
-	entry: SakeEntry;
-	prevSlideHref: string | null;
-	nextHref: string;
-	prevHighlightHref: string | null;
-	nextHighlightHref: string | null;
-	prevHighlightName: string | null;
-	nextHighlightName: string | null;
+	stories: StoryHighlight[];
+	highlightIndex: number;
+	slideIndex: number;
 	duration?: number;
 }
 
-const {
-	name,
-	initial,
-	index,
-	count,
-	entry,
-	prevSlideHref,
-	nextHref,
-	prevHighlightHref,
-	nextHighlightHref,
-	prevHighlightName,
-	nextHighlightName,
-	duration = 5000,
-} = Astro.props;
-const mark = heroMark(entry.name);
-const photo = entry.image?.url ? heroImage(entry.image.url) : null;
-const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
+const { stories, highlightIndex, slideIndex, duration = 5000 } = Astro.props;
+const cursor = { highlightIndex, slideIndex };
+const prevSlide = storyTarget(stories, cursor, 'prev-slide');
+const nextSlide = storyTarget(stories, cursor, 'next-slide');
+const current = stories[highlightIndex];
+if (!current) {
+	throw new Error('Missing highlight');
+}
 ---
 
 <div
 	class="story"
 	data-story
+	data-h={highlightIndex}
+	data-s={slideIndex}
 	data-duration={duration}
 	style={`--story-ms:${duration}ms`}
 >
-	{prevHighlightName && (
-		<div class="story-peek story-peek-prev" aria-hidden="true">
-			{prevHighlightName}
-		</div>
-	)}
-	{nextHighlightName && (
-		<div class="story-peek story-peek-next" aria-hidden="true">
-			{nextHighlightName}
-		</div>
-	)}
 	<div class="story-sheet" data-story-sheet>
-		<div class="story-progress" aria-hidden="true">
+		<div class="story-progress" data-story-progress aria-hidden="true">
 			{
-				Array.from({ length: count }, (_, segment) => {
-					const state = segment < index - 1 ? 'done' : segment === index - 1 ? 'current' : 'todo';
+				current.entries.map((_, segment) => {
+					const state = segment < slideIndex ? 'done' : segment === slideIndex ? 'current' : 'todo';
 					return (
 						<span class:list={['seg', `is-${state}`]}>
 							<span class="seg-fill" />
@@ -70,13 +51,13 @@ const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
 		</div>
 		<header class="story-meta">
 			<div class="story-id">
-				<span class="story-avatar" aria-hidden="true">
-					{initial}
+				<span class="story-avatar" data-story-avatar aria-hidden="true">
+					{current.initial}
 				</span>
 				<span class="story-titles">
-					<span class="story-name">{name}</span>
-					<span class="story-count">
-						{index} / {count}
+					<span class="story-name" data-story-name>{current.name}</span>
+					<span class="story-count" data-story-count>
+						{slideIndex + 1} / {current.entries.length}
 					</span>
 				</span>
 			</div>
@@ -84,31 +65,67 @@ const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
 				<Icon name="x" size={22} />
 			</a>
 		</header>
-		<div class="story-hero" transition:name={transitionName(entry.id)}>
+		<div class="story-stage">
 			{
-				photo ? (
-					<img src={photo.src} srcset={photo.srcset} sizes={photo.sizes} alt="" />
-				) : (
-					<Bottle primary={mark.primary} secondary={mark.secondary} />
+				stories.map((story, h) =>
+					story.entries.map((entry, s) => {
+						const mark = storyBottleMark(entry.name);
+						const photo = entry.image?.url ? heroImage(entry.image.url) : null;
+						const place = placeName(entry);
+						const active = h === highlightIndex && s === slideIndex;
+						return (
+							<article
+								class="story-slide"
+								data-h={h}
+								data-s={s}
+								data-href={highlightStoryHref(story.country, s + 1)}
+								data-hl-name={story.name}
+								data-hl-initial={story.initial}
+								hidden={!active}
+							>
+								<div class="story-hero">
+									{photo ? (
+										<img src={photo.src} srcset={photo.srcset} sizes={photo.sizes} alt="" />
+									) : (
+										<Bottle primary={mark.primary} secondary={mark.secondary} />
+									)}
+								</div>
+								<a class="story-caption" href={`/sake/${entry.id}`}>
+									<span class="story-sake">{entry.name}</span>
+									<span class="story-chips">
+										<span class="story-chip">
+											<Icon name="pin" size={12} weight={1.75} />
+											{countryName(entry)}
+										</span>
+										{place && <span class="story-chip">{place}</span>}
+									</span>
+									<span class="story-more">詳しく見る ›</span>
+								</a>
+							</article>
+						);
+					}),
 				)
 			}
+			<a
+				class="story-zone story-zone-prev"
+				href={prevSlide.href ?? '#top'}
+				data-story-prev
+				data-astro-reload
+				aria-label="前へ"
+				hidden={prevSlide.href == null}
+			>
+				<Icon name="chevron-left" size={20} />
+			</a>
+			<a
+				class="story-zone story-zone-next"
+				href={nextSlide.href ?? '/'}
+				data-story-next
+				data-astro-reload
+				aria-label={nextSlide.href === '/' ? '閉じる' : '次へ'}
+			>
+				<Icon name="chevron-right" size={20} />
+			</a>
 		</div>
-		<a class="story-caption" href={`/sake/${entry.id}`}>
-			<span class="story-sake">{entry.name}</span>
-			<span class="story-more">詳しく見る ›</span>
-		</a>
-		{
-			prevSlideHref && (
-				<a class="story-zone story-zone-prev" href={prevSlideHref} data-story-prev aria-label="前へ">
-					<Icon name="chevron-left" size={20} />
-				</a>
-			)
-		}
-		<a class="story-zone story-zone-next" href={nextHref} data-story-next aria-label={nextLabel}>
-			<Icon name="chevron-right" size={20} />
-		</a>
-		{prevHighlightHref && <a href={prevHighlightHref} data-swipe-prev hidden>前のハイライト</a>}
-		{nextHighlightHref && <a href={nextHighlightHref} data-swipe-next hidden>次のハイライト</a>}
 	</div>
 </div>
 
@@ -125,7 +142,7 @@ const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
 				remain: 0,
 				tracking: false,
 				dragged: false,
-				suppressClick: false,
+				swiped: false,
 				startX: 0,
 				startY: 0,
 				activePointer: null,
@@ -145,11 +162,107 @@ const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
 				return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 			}
 
-			function follow(link) {
-				if (!link) return;
+			function cursor(story) {
+				return {
+					h: Number(story.getAttribute('data-h')),
+					s: Number(story.getAttribute('data-s')),
+				};
+			}
+
+			function slideCount(h) {
+				return document.querySelectorAll('.story-slide[data-h="' + h + '"]').length;
+			}
+
+			function lastHighlight() {
+				var max = 0;
+				document.querySelectorAll('.story-slide').forEach(function (el) {
+					var h = Number(el.getAttribute('data-h'));
+					if (h > max) max = h;
+				});
+				return max;
+			}
+
+			function activeSlide(story) {
+				return story.querySelector('.story-slide:not([hidden])');
+			}
+
+			function renderProgress(story, index, count) {
+				var bar = story.querySelector('[data-story-progress]');
+				if (!bar) return;
+				bar.replaceChildren();
+				for (var i = 0; i < count; i++) {
+					var seg = document.createElement('span');
+					seg.className = 'seg ' + (i < index ? 'is-done' : i === index ? 'is-current' : 'is-todo');
+					var fill = document.createElement('span');
+					fill.className = 'seg-fill';
+					seg.appendChild(fill);
+					bar.appendChild(seg);
+				}
+			}
+
+			function show(h, s) {
+				var story = root();
+				if (!story) return;
+				var count = slideCount(h);
+				if (!count || s < 0 || s >= count) return;
 				clearTimer();
-				var href = link.getAttribute('href');
-				if (href) window.location.href = href;
+				story.querySelectorAll('.story-slide').forEach(function (el) {
+					var on = Number(el.getAttribute('data-h')) === h && Number(el.getAttribute('data-s')) === s;
+					el.hidden = !on;
+				});
+				story.setAttribute('data-h', String(h));
+				story.setAttribute('data-s', String(s));
+				var slide = activeSlide(story);
+				if (!slide) return;
+				var name = story.querySelector('[data-story-name]');
+				var avatar = story.querySelector('[data-story-avatar]');
+				var countEl = story.querySelector('[data-story-count]');
+				if (name) name.textContent = slide.getAttribute('data-hl-name') || '';
+				if (avatar) avatar.textContent = slide.getAttribute('data-hl-initial') || '';
+				if (countEl) countEl.textContent = s + 1 + ' / ' + count;
+				renderProgress(story, s, count);
+				var prev = story.querySelector('[data-story-prev]');
+				var next = story.querySelector('[data-story-next]');
+				if (prev) prev.hidden = s === 0;
+				if (next) {
+					var closing = h === lastHighlight() && s === count - 1;
+					next.setAttribute('aria-label', closing ? '閉じる' : '次へ');
+				}
+				var href = slide.getAttribute('data-href');
+				if (href) history.replaceState(history.state, '', href);
+				story.classList.remove('is-paused');
+				var sheet = story.querySelector('[data-story-sheet]');
+				if (sheet) {
+					sheet.style.transition = '';
+					sheet.style.transform = '';
+				}
+				arm(story);
+			}
+
+			function step(direction) {
+				var story = root();
+				if (!story) return;
+				var pos = cursor(story);
+				var count = slideCount(pos.h);
+				var s = pos.s + direction;
+				if (s >= 0 && s < count) {
+					show(pos.h, s);
+					return;
+				}
+				if (direction > 0) {
+					if (pos.h < lastHighlight()) show(pos.h + 1, 0);
+					else window.location.href = '/';
+				}
+			}
+
+			function swipe(direction) {
+				var story = root();
+				if (!story) return false;
+				var pos = cursor(story);
+				var h = pos.h + direction;
+				if (h < 0 || h > lastHighlight()) return false;
+				show(h, 0);
+				return true;
 			}
 
 			function arm(story) {
@@ -158,10 +271,8 @@ const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
 				var ms = Number(story.getAttribute('data-duration')) || 5000;
 				storyState.remain = ms;
 				storyState.endsAt = performance.now() + ms;
-				if (!story.querySelector('[data-story-next]')) return;
 				storyState.timer = window.setTimeout(function () {
-					var current = root();
-					follow(current && current.querySelector('[data-story-next]'));
+					step(1);
 				}, ms);
 			}
 
@@ -178,17 +289,17 @@ const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
 				if (reduced()) return;
 				storyState.endsAt = performance.now() + storyState.remain;
 				storyState.timer = window.setTimeout(function () {
-					var current = root();
-					follow(current && current.querySelector('[data-story-next]'));
+					step(1);
 				}, storyState.remain);
 			}
 
 			function shift(story, dx) {
 				var sheet = story.querySelector('[data-story-sheet]');
 				if (!sheet) return;
+				var pos = cursor(story);
 				var limited = dx;
-				if (limited > 0 && !story.querySelector('[data-swipe-prev]')) limited *= 0.25;
-				if (limited < 0 && !story.querySelector('[data-swipe-next]')) limited *= 0.25;
+				if (limited > 0 && pos.h <= 0) limited *= 0.25;
+				if (limited < 0 && pos.h >= lastHighlight()) limited *= 0.25;
 				limited = Math.max(-160, Math.min(160, limited));
 				sheet.style.transition = 'none';
 				sheet.style.transform = 'translate3d(' + limited + 'px,0,0)';
@@ -208,12 +319,10 @@ const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
 				storyState.tracking = false;
 				storyState.activePointer = null;
 				if (storyState.dragged && Math.abs(dx) >= 56) {
-					var link = story.querySelector(dx < 0 ? '[data-swipe-next]' : '[data-swipe-prev]');
-					if (link) {
-						storyState.suppressClick = true;
-						follow(link);
-						return;
-					}
+					storyState.swiped = true;
+					storyState.dragged = false;
+					if (!swipe(dx < 0 ? 1 : -1)) resetShift(story);
+					return;
 				}
 				storyState.dragged = false;
 				resetShift(story);
@@ -246,16 +355,22 @@ const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
 				});
 				story.addEventListener('pointerup', onPointerEnd);
 				story.addEventListener('pointercancel', onPointerEnd);
-				story.addEventListener('click', function (event) {
-					if (closestLink(event.target)) clearTimer();
-				});
 				story.addEventListener(
 					'click',
 					function (event) {
-						if (!storyState.suppressClick) return;
+						if (storyState.swiped) {
+							storyState.swiped = false;
+							event.preventDefault();
+							event.stopPropagation();
+							return;
+						}
+						var zone = event.target && event.target.closest ? event.target.closest('[data-story-prev],[data-story-next]') : null;
+						if (!zone) return;
 						event.preventDefault();
 						event.stopPropagation();
-						storyState.suppressClick = false;
+						clearTimer();
+						if (zone.hasAttribute('data-story-next')) step(1);
+						else step(-1);
 					},
 					true,
 				);
@@ -275,15 +390,6 @@ const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
 			}
 
 			storyState.boot = boot;
-			document.addEventListener(
-				'click',
-				function (event) {
-					var story = root();
-					if (!story || !story.contains(event.target)) return;
-					if (closestLink(event.target)) clearTimer();
-				},
-				true,
-			);
 			document.addEventListener('astro:page-load', boot);
 			document.addEventListener('astro:before-preparation', clearTimer);
 			document.addEventListener('visibilitychange', function () {
@@ -296,15 +402,18 @@ const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
 				var story = root();
 				if (!story) return;
 				if (event.altKey || event.metaKey || event.ctrlKey) return;
+				var target = event.target;
+				if (target && target.closest && target.closest('input, textarea')) return;
 				if (event.key === 'Escape') {
 					event.preventDefault();
-					follow(story.querySelector('[data-story-close]'));
+					var close = story.querySelector('[data-story-close]');
+					if (close) window.location.href = close.getAttribute('href') || '/';
 				} else if (event.key === 'ArrowRight') {
 					event.preventDefault();
-					follow(story.querySelector('[data-story-next]'));
+					step(1);
 				} else if (event.key === 'ArrowLeft') {
 					event.preventDefault();
-					follow(story.querySelector('[data-story-prev]'));
+					step(-1);
 				}
 			});
 		}
