@@ -645,7 +645,8 @@ body.story {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	min-height: 100dvh;
+	height: 100dvh;
+	min-height: 0;
 	background: #2a2622;
 }
 
@@ -744,10 +745,11 @@ body.story {
 
 .story-hero {
 	flex: 1;
-	min-height: 240px;
+	min-height: 0;
 	background: #3a3530;
 	display: grid;
 	place-items: center;
+	overflow: hidden;
 }
 
 .story-hero img {
@@ -760,7 +762,8 @@ body.story {
 
 .story-hero .bottle {
 	width: 110px;
-	height: 300px;
+	height: min(300px, 78%);
+	max-height: 100%;
 	background: #d6cfc3;
 }
 
@@ -779,6 +782,7 @@ body.story {
 }
 
 .story-caption {
+	flex: none;
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
@@ -804,19 +808,23 @@ body.story {
 	position: absolute;
 	top: 116px;
 	bottom: 128px;
-	width: 72px;
+	width: min(96px, 28%);
 	z-index: 2;
 	display: grid;
-	place-items: center;
+	align-content: center;
 	color: rgb(245 240 232 / 35%);
 }
 
 .story-zone-prev {
 	left: 0;
+	justify-items: start;
+	padding-left: 26px;
 }
 
 .story-zone-next {
 	right: 0;
+	justify-items: end;
+	padding-right: 26px;
 }
 
 @keyframes story-fill {

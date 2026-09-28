@@ -275,6 +275,15 @@ const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
 			}
 
 			storyState.boot = boot;
+			document.addEventListener(
+				'click',
+				function (event) {
+					var story = root();
+					if (!story || !story.contains(event.target)) return;
+					if (closestLink(event.target)) clearTimer();
+				},
+				true,
+			);
 			document.addEventListener('astro:page-load', boot);
 			document.addEventListener('astro:before-preparation', clearTimer);
 			document.addEventListener('visibilitychange', function () {
