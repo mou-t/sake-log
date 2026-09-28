@@ -808,8 +808,8 @@ body.story {
 	flex: none;
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
-	padding: 16px 20px calc(28px + env(safe-area-inset-bottom));
+	gap: 10px;
+	padding: 16px 20px calc(36px + env(safe-area-inset-bottom));
 	background: #2a2622;
 	color: var(--story-ink);
 }
@@ -826,7 +826,7 @@ body.story {
 	gap: 6px;
 	padding: 6px 12px;
 	border-radius: 999px;
-	background: #3a3530;
+	background: #3f3a35;
 	color: var(--story-muted);
 	font-size: 12px;
 	font-weight: 500;
@@ -848,7 +848,7 @@ body.story {
 .story-zone {
 	position: absolute;
 	top: 0;
-	bottom: 148px;
+	bottom: 160px;
 	width: min(96px, 28%);
 	z-index: 2;
 	display: grid;
