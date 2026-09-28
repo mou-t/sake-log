@@ -1,6 +1,6 @@
 export const profile = {
-	username: 'shunta',
+	username: 'お酒メモ',
 	displayName: 'お酒メモ',
-	bio: '飲んだお酒のメモ · by Shunta',
+	bio: '飲んだお酒のメモ',
 	avatar: '酒',
 } as const;
