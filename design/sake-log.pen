@@ -69,20 +69,10 @@
               "id": "eU04f",
               "name": "Username",
               "fill": "$text-primary",
-              "content": "shunta",
+              "content": "お酒メモ",
               "fontFamily": "Inter",
               "fontSize": 16,
               "fontWeight": "700"
-            },
-            {
-              "type": "icon",
-              "id": "PWab5",
-              "name": "Menu",
-              "width": 22,
-              "height": 22,
-              "icon": "menu",
-              "library": "lucide",
-              "fill": "$text-primary"
             }
           ]
         },
@@ -260,7 +250,7 @@
                   "fill": "$text-secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "飲んだお酒のメモ · by Shunta",
+                  "content": "飲んだお酒のメモ",
                   "fontFamily": "Noto Sans JP",
                   "fontSize": 13,
                   "fontWeight": "normal"
@@ -274,11 +264,11 @@
           "id": "Pqcfq",
           "name": "Highlights",
           "width": "fill_container",
-          "gap": 14,
+          "gap": 16,
           "padding": [
-            4,
+            8,
             16,
-            12,
+            16,
             16
           ],
           "children": [
@@ -298,8 +288,35 @@
                   "width": 64,
                   "height": 64,
                   "cornerRadius": 999,
-                  "stroke": "$border",
-                  "strokeWidth": 1.5,
+                  "stroke": {
+                    "type": "gradient",
+                    "gradientType": "angular",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#C4A574",
+                        "position": 0
+                      },
+                      {
+                        "color": "#E8D5B5",
+                        "position": 0.35
+                      },
+                      {
+                        "color": "#A89070",
+                        "position": 0.7
+                      },
+                      {
+                        "color": "#C4A574",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "strokeWidth": 2,
                   "padding": 3,
                   "justifyContent": "center",
                   "alignItems": "center",
@@ -357,8 +374,35 @@
                   "width": 64,
                   "height": 64,
                   "cornerRadius": 999,
-                  "stroke": "$border",
-                  "strokeWidth": 1.5,
+                  "stroke": {
+                    "type": "gradient",
+                    "gradientType": "angular",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#C4A574",
+                        "position": 0
+                      },
+                      {
+                        "color": "#E8D5B5",
+                        "position": 0.35
+                      },
+                      {
+                        "color": "#A89070",
+                        "position": 0.7
+                      },
+                      {
+                        "color": "#C4A574",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "strokeWidth": 2,
                   "padding": 3,
                   "justifyContent": "center",
                   "alignItems": "center",
@@ -416,8 +460,35 @@
                   "width": 64,
                   "height": 64,
                   "cornerRadius": 999,
-                  "stroke": "$border",
-                  "strokeWidth": 1.5,
+                  "stroke": {
+                    "type": "gradient",
+                    "gradientType": "angular",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#C4A574",
+                        "position": 0
+                      },
+                      {
+                        "color": "#E8D5B5",
+                        "position": 0.35
+                      },
+                      {
+                        "color": "#A89070",
+                        "position": 0.7
+                      },
+                      {
+                        "color": "#C4A574",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "strokeWidth": 2,
                   "padding": 3,
                   "justifyContent": "center",
                   "alignItems": "center",
@@ -475,8 +546,35 @@
                   "width": 64,
                   "height": 64,
                   "cornerRadius": 999,
-                  "stroke": "$border",
-                  "strokeWidth": 1.5,
+                  "stroke": {
+                    "type": "gradient",
+                    "gradientType": "angular",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#C4A574",
+                        "position": 0
+                      },
+                      {
+                        "color": "#E8D5B5",
+                        "position": 0.35
+                      },
+                      {
+                        "color": "#A89070",
+                        "position": 0.7
+                      },
+                      {
+                        "color": "#C4A574",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "strokeWidth": 2,
                   "padding": 3,
                   "justifyContent": "center",
                   "alignItems": "center",
@@ -1148,24 +1246,10 @@
             },
             {
               "type": "frame",
-              "id": "w9rD24",
-              "name": "More",
+              "id": "aopmz",
+              "name": "Trailing Spacer",
               "width": 40,
-              "height": 40,
-              "justifyContent": "center",
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "icon",
-                  "id": "vxZne",
-                  "name": "More Icon",
-                  "width": 22,
-                  "height": 22,
-                  "icon": "ellipsis",
-                  "library": "lucide",
-                  "fill": "$text-primary"
-                }
-              ]
+              "height": 40
             }
           ]
         },
@@ -1562,6 +1646,998 @@
                   ]
                 }
               ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "RH9K9",
+      "x": 940,
+      "y": 0,
+      "name": "03 Highlight / Story",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "#2A2622",
+      "cornerRadius": 40,
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "Xmd9R",
+          "name": "Status Bar",
+          "width": "fill_container",
+          "height": 54,
+          "padding": [
+            16,
+            24,
+            0,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "B6hTd",
+              "name": "Time",
+              "fill": "#F5F0E8",
+              "content": "9:41",
+              "fontFamily": "Inter",
+              "fontSize": 15,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "k2SPs9",
+              "name": "Icons",
+              "fill": "#C8BFB0",
+              "content": "●●●",
+              "fontFamily": "Inter",
+              "fontSize": 11,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "y5jBM",
+          "name": "Progress Segments",
+          "width": "fill_container",
+          "height": 14,
+          "gap": 4,
+          "padding": [
+            6,
+            12,
+            2,
+            12
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "HZefC",
+              "name": "Seg 1",
+              "clip": true,
+              "width": "fill_container",
+              "height": 3,
+              "fill": "#F5F0E8",
+              "cornerRadius": 999,
+              "layout": "none"
+            },
+            {
+              "type": "frame",
+              "id": "f9e9v",
+              "name": "Seg 2",
+              "clip": true,
+              "width": "fill_container",
+              "height": 3,
+              "fill": "#F5F0E8",
+              "cornerRadius": 999,
+              "layout": "none"
+            },
+            {
+              "type": "frame",
+              "id": "COvh9",
+              "name": "Seg 3",
+              "clip": true,
+              "width": "fill_container",
+              "height": 3,
+              "fill": "#FFFFFF33",
+              "cornerRadius": 999,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "zndJk",
+                  "x": 0,
+                  "y": 0,
+                  "name": "Seg Fill",
+                  "width": 40,
+                  "height": 3,
+                  "fill": "#F5F0E8",
+                  "cornerRadius": 999
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "jQWh9",
+              "name": "Seg 4",
+              "clip": true,
+              "width": "fill_container",
+              "height": 3,
+              "fill": "#FFFFFF33",
+              "cornerRadius": 999,
+              "layout": "none"
+            },
+            {
+              "type": "frame",
+              "id": "TcXzo",
+              "name": "Seg 5",
+              "clip": true,
+              "width": "fill_container",
+              "height": 3,
+              "fill": "#FFFFFF33",
+              "cornerRadius": 999,
+              "layout": "none"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "FRjas",
+          "name": "Story Meta",
+          "width": "fill_container",
+          "height": 48,
+          "padding": [
+            4,
+            14,
+            8,
+            14
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "G4fTq",
+              "name": "Meta Left",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "s2LEbo",
+                  "name": "HL Avatar",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "#E2DCD2",
+                  "cornerRadius": 999,
+                  "stroke": "#C4A574",
+                  "strokeWidth": 1.5,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "tfeje",
+                      "name": "Av Letter",
+                      "fill": "#8A857C",
+                      "content": "日",
+                      "fontFamily": "Noto Sans JP",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "tiARN",
+                  "name": "Meta Texts",
+                  "layout": "vertical",
+                  "gap": 1,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Y0CaJ",
+                      "name": "HL Name",
+                      "fill": "#F5F0E8",
+                      "content": "日本",
+                      "fontFamily": "Noto Sans JP",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "IL8fK",
+                      "name": "Seg Count",
+                      "fill": "#C8BFB0",
+                      "content": "3 / 5",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "t3u7qf",
+              "name": "Close",
+              "width": 36,
+              "height": 36,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "dJzmn",
+                  "name": "Close Icon",
+                  "width": 22,
+                  "height": 22,
+                  "icon": "x",
+                  "library": "lucide",
+                  "fill": "#F5F0E8"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ezMKP",
+          "name": "Bottle Hero",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "#3A3530",
+          "layout": "vertical",
+          "gap": 20,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Dnh0S",
+              "name": "Bottle Body",
+              "width": 110,
+              "height": 300,
+              "fill": "#D6CFC3",
+              "cornerRadius": [
+                12,
+                12,
+                8,
+                8
+              ],
+              "layout": "vertical",
+              "gap": 12,
+              "padding": [
+                24,
+                0,
+                20,
+                0
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "jMhMm",
+                  "name": "Neck",
+                  "width": 38,
+                  "height": 48,
+                  "fill": "#E2DCD2",
+                  "cornerRadius": [
+                    8,
+                    8,
+                    2,
+                    2
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "WPQka",
+                  "name": "Label Area",
+                  "width": 72,
+                  "height": 120,
+                  "fill": "#F3EFE8",
+                  "cornerRadius": 4,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "v18FME",
+                      "name": "Mark",
+                      "fill": "#C4A574",
+                      "content": "而",
+                      "fontFamily": "Noto Sans JP",
+                      "fontSize": 32,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "fS8Vz",
+                      "name": "Mark2",
+                      "fill": "#8A857C",
+                      "content": "今",
+                      "fontFamily": "Noto Sans JP",
+                      "fontSize": 16,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "NIOwe",
+          "name": "Caption Bar",
+          "width": "fill_container",
+          "fill": "#2A2622",
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            16,
+            20,
+            36,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "fa5y8",
+              "name": "Caption Texts",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "j1rNjc",
+                  "name": "Sake Name",
+                  "fill": "#F5F0E8",
+                  "content": "而今 純米吟醸",
+                  "fontFamily": "Noto Sans JP",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "gBPad",
+                  "name": "Chip Row",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "yAxIJ",
+                      "name": "Country Chip",
+                      "fill": "#3F3A35",
+                      "cornerRadius": 999,
+                      "gap": 6,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "O65lP5",
+                          "name": "Pin",
+                          "width": 12,
+                          "height": 12,
+                          "icon": "map-pin",
+                          "library": "lucide",
+                          "fill": "#C8BFB0"
+                        },
+                        {
+                          "type": "text",
+                          "id": "qUHli",
+                          "name": "Country",
+                          "fill": "#C8BFB0",
+                          "content": "日本",
+                          "fontFamily": "Noto Sans JP",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "FNJLj",
+                      "name": "Place Chip",
+                      "fill": "#3F3A35",
+                      "cornerRadius": 999,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "u8yOKA",
+                          "name": "Place",
+                          "fill": "#C8BFB0",
+                          "content": "三重県",
+                          "fontFamily": "Noto Sans JP",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "TPNty",
+                  "name": "Subtle Affordance",
+                  "fill": "#C8BFB0",
+                  "content": "詳しく見る  ›",
+                  "fontFamily": "Noto Sans JP",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "g9Y6zK",
+          "layoutPosition": "absolute",
+          "x": 0,
+          "y": 120,
+          "name": "Tap Zone Left",
+          "opacity": 0.35,
+          "width": 70,
+          "height": 520,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "l9Eroc",
+              "name": "Prev Hint",
+              "width": 20,
+              "height": 20,
+              "icon": "chevron-left",
+              "library": "lucide",
+              "fill": "#F5F0E8"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "p8GEKb",
+          "layoutPosition": "absolute",
+          "x": 320,
+          "y": 120,
+          "name": "Tap Zone Right",
+          "opacity": 0.35,
+          "width": 70,
+          "height": 520,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "k1fD54",
+              "name": "Next Hint",
+              "width": 20,
+              "height": 20,
+              "icon": "chevron-right",
+              "library": "lucide",
+              "fill": "#F5F0E8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Guqdr",
+      "x": 1410,
+      "y": 0,
+      "name": "04 Highlight / Story · Adjacent",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "#2A2622",
+      "cornerRadius": 40,
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "iKVk3",
+          "x": -280,
+          "y": 0,
+          "name": "Prev Country Peek",
+          "opacity": 0.4,
+          "width": 330,
+          "height": 844,
+          "fill": "#2A2622",
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "j3aWI",
+              "name": "Pad Top",
+              "width": "fill_container",
+              "height": 120
+            },
+            {
+              "type": "frame",
+              "id": "anjk7",
+              "name": "Peek Hero",
+              "width": "fill_container",
+              "height": "fill_container",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "MbDDV",
+                  "name": "Peek Label",
+                  "fill": "#F5F0E8",
+                  "content": "日本",
+                  "fontFamily": "Noto Sans JP",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "dKWez",
+          "x": 56,
+          "y": 0,
+          "name": "Current France Story",
+          "clip": true,
+          "width": 334,
+          "height": 844,
+          "fill": "#2A2622",
+          "cornerRadius": [
+            40,
+            0,
+            0,
+            40
+          ],
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "NuwZA",
+              "name": "Status Bar",
+              "width": "fill_container",
+              "height": 54,
+              "padding": [
+                16,
+                24,
+                0,
+                24
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vBiCT",
+                  "name": "Time",
+                  "fill": "#F5F0E8",
+                  "content": "9:41",
+                  "fontFamily": "Inter",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "eI5MC",
+                  "name": "Icons",
+                  "fill": "#C8BFB0",
+                  "content": "●●●",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "TJ13q",
+              "name": "Progress Segments",
+              "width": "fill_container",
+              "height": 14,
+              "gap": 4,
+              "padding": [
+                6,
+                12,
+                2,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "CUCIg",
+                  "name": "Seg 1",
+                  "width": "fill_container",
+                  "height": 3,
+                  "fill": "#F5F0E8",
+                  "cornerRadius": 999
+                },
+                {
+                  "type": "frame",
+                  "id": "Ugobs",
+                  "name": "Seg 2",
+                  "width": "fill_container",
+                  "height": 3,
+                  "fill": "#FFFFFF33",
+                  "cornerRadius": 999
+                },
+                {
+                  "type": "frame",
+                  "id": "eVujw",
+                  "name": "Seg 3",
+                  "width": "fill_container",
+                  "height": 3,
+                  "fill": "#FFFFFF33",
+                  "cornerRadius": 999
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "bdXfT",
+              "name": "Story Meta",
+              "width": "fill_container",
+              "height": 48,
+              "padding": [
+                4,
+                14,
+                8,
+                14
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "JmvjW",
+                  "name": "Meta Left",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "gFN7r",
+                      "name": "HL Avatar",
+                      "width": 32,
+                      "height": 32,
+                      "fill": "#EDE8E0",
+                      "cornerRadius": 999,
+                      "stroke": "#C4A574",
+                      "strokeWidth": 1.5,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "RZ5u9",
+                          "name": "Av Letter",
+                          "fill": "#8A857C",
+                          "content": "フ",
+                          "fontFamily": "Noto Sans JP",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "EU3V5",
+                      "name": "Meta Texts",
+                      "layout": "vertical",
+                      "gap": 1,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "cphUS",
+                          "name": "HL Name",
+                          "fill": "#F5F0E8",
+                          "content": "フランス",
+                          "fontFamily": "Noto Sans JP",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "YPRl7",
+                          "name": "Seg Count",
+                          "fill": "#C8BFB0",
+                          "content": "1 / 3",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BiPtt",
+                  "name": "Close",
+                  "width": 36,
+                  "height": 36,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "e7hn4l",
+                      "name": "Close Icon",
+                      "width": 22,
+                      "height": 22,
+                      "icon": "x",
+                      "library": "lucide",
+                      "fill": "#F5F0E8"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "q6OOGk",
+              "name": "Bottle Hero",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "#3A3530",
+              "layout": "vertical",
+              "gap": 16,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "G7AoRM",
+                  "name": "Bottle Body",
+                  "width": 100,
+                  "height": 280,
+                  "fill": "#E2DCD2",
+                  "cornerRadius": [
+                    12,
+                    12,
+                    8,
+                    8
+                  ],
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": [
+                    22,
+                    0,
+                    18,
+                    0
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "w9j0eU",
+                      "name": "Neck",
+                      "width": 34,
+                      "height": 44,
+                      "fill": "#EDE8E0",
+                      "cornerRadius": [
+                        8,
+                        8,
+                        2,
+                        2
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "j7At5",
+                      "name": "Label Area",
+                      "width": 66,
+                      "height": 110,
+                      "fill": "#F3EFE8",
+                      "cornerRadius": 4,
+                      "layout": "vertical",
+                      "gap": 4,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Xt2iF",
+                          "name": "Mark",
+                          "fill": "#C4A574",
+                          "content": "Dom",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "mR1us",
+                          "name": "Mark2",
+                          "fill": "#8A857C",
+                          "content": "Pérignon",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Gf02w",
+              "name": "Caption Bar",
+              "width": "fill_container",
+              "fill": "#2A2622",
+              "layout": "vertical",
+              "gap": 10,
+              "padding": [
+                16,
+                20,
+                36,
+                20
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ODxx6",
+                  "name": "Sake Name",
+                  "fill": "#F5F0E8",
+                  "content": "ドンペリニヨン 2012",
+                  "fontFamily": "Noto Sans JP",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "tqYSf",
+                  "name": "Chip Row",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "nMaFL",
+                      "name": "Country Chip",
+                      "fill": "#3F3A35",
+                      "cornerRadius": 999,
+                      "gap": 6,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "ax3HO",
+                          "name": "Pin",
+                          "width": 12,
+                          "height": 12,
+                          "icon": "map-pin",
+                          "library": "lucide",
+                          "fill": "#C8BFB0"
+                        },
+                        {
+                          "type": "text",
+                          "id": "PmHmH",
+                          "name": "Country",
+                          "fill": "#C8BFB0",
+                          "content": "フランス",
+                          "fontFamily": "Noto Sans JP",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "xCFFP",
+                      "name": "Place Chip",
+                      "fill": "#3F3A35",
+                      "cornerRadius": 999,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "MqeiN",
+                          "name": "Place",
+                          "fill": "#C8BFB0",
+                          "content": "シャンパーニュ",
+                          "fontFamily": "Noto Sans JP",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "q84OE9",
+                  "name": "Subtle Affordance",
+                  "fill": "#C8BFB0",
+                  "content": "詳しく見る  ›",
+                  "fontFamily": "Noto Sans JP",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "QvAc4",
+          "x": 8,
+          "y": 400,
+          "name": "Swipe Hint",
+          "opacity": 0.5,
+          "width": 32,
+          "height": 40,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "ogNdQ",
+              "name": "Swipe Icon",
+              "width": 22,
+              "height": 22,
+              "icon": "chevrons-left",
+              "library": "lucide",
+              "fill": "#F5F0E8"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "T3TqTQ",
+          "x": 0,
+          "y": 390,
+          "name": "Edge Country Tag",
+          "width": 48,
+          "height": 60,
+          "layout": "vertical",
+          "gap": 4,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "a2oOig",
+              "name": "Edge JP",
+              "fill": "#C8BFB0",
+              "content": "日本",
+              "fontFamily": "Noto Sans JP",
+              "fontSize": 10,
+              "fontWeight": "600"
             }
           ]
         }

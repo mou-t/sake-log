@@ -8,11 +8,15 @@ import {
 	filterEntries,
 	gridLabel,
 	heroMark,
-	highlightHref,
+	highlightStoryHref,
 	homeQuery,
+	moveStory,
 	placeName,
 	presentLinks,
 	profileStats,
+	storyBottleMark,
+	storyHighlights,
+	storyTarget,
 } from './sake-view.ts';
 import type { SakeEntry } from './types.ts';
 
@@ -90,17 +94,58 @@ describe('sake view', () => {
 	});
 
 	it('builds home links and placeholder marks', () => {
-		assert.equal(homeQuery({}), '/');
-		assert.equal(homeQuery({ country: '日本', view: 'list' }), '/?country=%E6%97%A5%E6%9C%AC&view=list');
-		assert.equal(
-			highlightHref({ name: '日本', initial: '日', country: '日本' }, { country: '日本', view: 'grid' }),
-			'/',
-		);
+		assert.equal(homeQuery(), '/');
+		assert.equal(homeQuery('list'), '/?view=list');
+		assert.equal(highlightStoryHref('日本'), '/highlight/%E6%97%A5%E6%9C%AC/1');
+		assert.equal(highlightStoryHref('other', 3), '/highlight/other/3');
 		assert.equal(gridLabel('獺祭 純米大吟醸 磨き二割三分'), '獺祭');
 		assert.deepEqual(heroMark('獺祭 純米大吟醸'), { primary: '獺', secondary: '祭' });
 		assert.equal(transitionName('ab/c d'), 'sake-abcd');
 		assert.equal(imageSrc('https://img.example/a.jpg', { w: '100', q: undefined }), 'https://img.example/a.jpg?w=100');
 		assert.match(heroImage('https://img.example/a.jpg').src, /w=1400/);
+	});
+
+	it('opens the next highlight at the end of a country and skips empty ones', () => {
+		const stories = storyHighlights(fixtureEntries());
+		assert.deepEqual(
+			stories.map((story) => [story.country, story.entries.length]),
+			[
+				['日本', 6],
+				['フランス', 1],
+				['イタリア', 1],
+				['other', 1],
+			],
+		);
+		const japan = { highlightIndex: 0, slideIndex: 0 };
+		assert.equal(storyTarget(stories, japan, 'prev-slide').href, null);
+		assert.equal(storyTarget(stories, japan, 'next-slide').href, highlightStoryHref('日本', 2));
+		assert.equal(
+			storyTarget(stories, { highlightIndex: 0, slideIndex: 5 }, 'next-slide').href,
+			highlightStoryHref('フランス', 1),
+		);
+		assert.equal(storyTarget(stories, { highlightIndex: 1, slideIndex: 0 }, 'prev-slide').href, null);
+		assert.equal(
+			storyTarget(stories, { highlightIndex: 1, slideIndex: 0 }, 'prev-highlight').href,
+			highlightStoryHref('日本', 1),
+		);
+		assert.equal(storyTarget(stories, { highlightIndex: 3, slideIndex: 0 }, 'next-slide').href, '/');
+		assert.equal(storyTarget(stories, { highlightIndex: 3, slideIndex: 0 }, 'next-highlight').href, null);
+		assert.equal(stories[0]?.entries[4]?.name, '十四代');
+		assert.deepEqual(storyBottleMark('十四代'), { primary: '十', secondary: '四' });
+		assert.deepEqual(storyBottleMark('作'), { primary: '作', secondary: '' });
+		assert.ok(stories.every((story) => story.entries.every((entry) => entry.id && entry.name)));
+		assert.equal(placeName(stories[0]?.entries[0]!), '山口県');
+		assert.deepEqual(moveStory([2, 0, 3], { highlightIndex: 0, slideIndex: 1 }, 'next-slide'), {
+			type: 'go',
+			highlightIndex: 2,
+			slideIndex: 0,
+		});
+		assert.deepEqual(moveStory([0, 2], { highlightIndex: 1, slideIndex: 0 }, 'prev-highlight'), {
+			type: 'stay',
+		});
+		assert.deepEqual(moveStory([1, 0], { highlightIndex: 0, slideIndex: 0 }, 'next-slide'), {
+			type: 'close',
+		});
 	});
 
 	it('shapes the dev fixture like the profile screen', () => {

@@ -2,9 +2,7 @@
 interface Item {
 	name: string;
 	initial: string;
-	country: string;
 	href: string;
-	active: boolean;
 }
 
 interface Props {
@@ -14,15 +12,10 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<nav class="highlights" aria-label="国">
+<nav class="highlights" aria-label="ハイライト">
 	{
 		items.map((item) => (
-			<a
-				class:list={['hl', { active: item.active }]}
-				href={item.href}
-				data-country-link={item.country}
-				aria-current={item.active ? 'true' : undefined}
-			>
+			<a class="hl" href={item.href} aria-label={`${item.name}のハイライト`}>
 				<span class="ring" aria-hidden="true">
 					<span class="bubble">{item.initial}</span>
 				</span>

@@ -1,0 +1,40 @@
+---
+import StoryViewer from '../../../components/StoryViewer.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getAllSake, MicrocmsConfigError } from '../../../lib/microcms';
+import { storyHighlights, type StoryHighlight } from '../../../lib/sake-view';
+import type { SakeEntry } from '../../../lib/types';
+
+export async function getStaticPaths() {
+	try {
+		const entries = await getAllSake();
+		const stories = storyHighlights(entries);
+		return stories.flatMap((story, highlightIndex) =>
+			story.entries.map((entry, slideIndex) => ({
+				params: { country: story.country, index: String(slideIndex + 1) },
+				props: { stories, highlightIndex, slideIndex, entry },
+			})),
+		);
+	} catch (error) {
+		if (error instanceof MicrocmsConfigError) return [];
+		throw error;
+	}
+}
+
+interface Props {
+	stories: StoryHighlight[];
+	highlightIndex: number;
+	slideIndex: number;
+	entry: SakeEntry;
+}
+
+const { stories, highlightIndex, slideIndex, entry } = Astro.props;
+const story = stories[highlightIndex];
+if (!story) {
+	throw new Error('Missing highlight');
+}
+---
+
+<BaseLayout title={story.name} description={entry.name} story>
+	<StoryViewer stories={stories} highlightIndex={highlightIndex} slideIndex={slideIndex} />
+</BaseLayout>

@@ -17,16 +17,11 @@ const { username, title, backHref } = Astro.props;
 				<Icon name="chevron-left" size={24} />
 			</a>
 			<p class="topbar-title">{title}</p>
-			<span class="icon-slot" aria-hidden="true">
-				<Icon name="ellipsis" size={22} />
-			</span>
+			<span class="icon-slot" aria-hidden="true"></span>
 		</header>
 	) : (
 		<header class="topbar">
 			{title ? <h1 class="username">{title}</h1> : <a class="username" href="/">{username}</a>}
-			<span class="icon-slot" aria-hidden="true">
-				<Icon name="menu" size={22} />
-			</span>
 		</header>
 	)
 }

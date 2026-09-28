@@ -1,6 +1,6 @@
 ---
 import { gridImage, transitionName } from '../lib/image';
-import { countryHighlights, countryName, gridLabel, placeName } from '../lib/sake-view';
+import { countryName, gridLabel, placeName } from '../lib/sake-view';
 import type { SakeEntry } from '../lib/types';
 
 interface Props {
@@ -8,11 +8,6 @@ interface Props {
 }
 
 const { entries } = Astro.props;
-const featured = new Set(
-	countryHighlights(entries)
-		.filter((item) => item.country !== 'other')
-		.map((item) => item.country),
-);
 ---
 
 <div class="grid" data-view="grid">
@@ -29,7 +24,6 @@ const featured = new Set(
 					data-name={entry.name}
 					data-country={country}
 					data-place={placeName(entry) ?? ''}
-					data-featured={featured.has(country) ? 'true' : 'false'}
 					transition:name={transitionName(entry.id)}
 				>
 					{photo ? (
