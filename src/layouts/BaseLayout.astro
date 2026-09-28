@@ -5,9 +5,10 @@ import '../styles/global.css';
 interface Props {
 	title: string;
 	description?: string;
+	story?: boolean;
 }
 
-const { title, description = '飲んだお酒のメモ' } = Astro.props;
+const { title, description = '飲んだお酒のメモ', story = false } = Astro.props;
 const documentTitle = title === 'お酒メモ' ? title : `${title} | お酒メモ`;
 ---
 
@@ -15,7 +16,7 @@ const documentTitle = title === 'お酒メモ' ? title : `${title} | お酒メ�
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-		<meta name="theme-color" content="#FAF8F5" />
+		<meta name="theme-color" content={story ? '#2A2622' : '#FAF8F5'} />
 		<title>{documentTitle}</title>
 		<meta name="description" content={description} />
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -27,8 +28,8 @@ const documentTitle = title === 'お酒メモ' ? title : `${title} | お酒メ�
 		/>
 		<ClientRouter />
 	</head>
-	<body>
-		<div class="shell">
+	<body class:list={{ story }}>
+		<div class:list={['shell', { story }]}>
 			<slot />
 		</div>
 	</body>

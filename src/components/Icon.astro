@@ -9,7 +9,8 @@ interface Props {
 		| 'chevron-left'
 		| 'chevron-right'
 		| 'ellipsis'
-		| 'pin';
+		| 'pin'
+		| 'x';
 	size?: number;
 	weight?: number;
 }
@@ -59,6 +60,7 @@ const { name, size = 24, weight = 2 } = Astro.props;
 			<circle cx="19" cy="12" r="1" fill="currentColor" stroke="none" />
 		</>
 	)}
+	{name === 'x' && <path d="M18 6 6 18M6 6l12 12" />}
 	{name === 'pin' && (
 		<>
 			<path d="M20 10c0 4.5-5.2 8.8-7.2 10.2a1.4 1.4 0 0 1-1.6 0C9.2 18.8 4 14.5 4 10a8 8 0 0 1 16 0Z" />

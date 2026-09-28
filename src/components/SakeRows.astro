@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import { gridImage } from '../lib/image';
-import { countryHighlights, countryName, placeName } from '../lib/sake-view';
+import { countryName, placeName } from '../lib/sake-view';
 import type { SakeEntry } from '../lib/types';
 
 interface Props {
@@ -9,11 +9,6 @@ interface Props {
 }
 
 const { entries } = Astro.props;
-const featured = new Set(
-	countryHighlights(entries)
-		.filter((item) => item.country !== 'other')
-		.map((item) => item.country),
-);
 ---
 
 <div class="rows" data-view="list" hidden>
@@ -29,7 +24,6 @@ const featured = new Set(
 					data-name={entry.name}
 					data-country={country}
 					data-place={placeName(entry) ?? ''}
-					data-featured={featured.has(country) ? 'true' : 'false'}
 				>
 					<span class="thumb">
 						{photo ? <img src={photo.src} alt="" /> : <span class="silhouette" />}

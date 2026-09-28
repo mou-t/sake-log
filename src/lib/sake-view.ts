@@ -103,23 +103,90 @@ export function presentLinks(links: unknown[] | null | undefined): PresentedLink
 	});
 }
 
-export function homeQuery(params: { country?: string | null; view?: string | null }) {
-	const search = new URLSearchParams();
-	if (params.country) search.set('country', params.country);
-	if (params.view === 'list') search.set('view', 'list');
-	const query = search.toString();
-	return query ? `/?${query}` : '/';
+export function homeQuery(view?: string | null) {
+	return view === 'list' ? '/?view=list' : '/';
 }
 
-export function highlightHref(
-	highlight: Highlight,
-	current: { country?: string | null; view?: string | null },
-) {
-	const active = current.country === highlight.country;
-	return homeQuery({
-		country: active ? null : highlight.country,
-		view: current.view,
-	});
+export function highlightStoryHref(country: string, index = 1) {
+	return `/highlight/${encodeURIComponent(country)}/${index}`;
+}
+
+export type StoryHighlight = Highlight & {
+	entries: SakeEntry[];
+};
+
+export type StoryCursor = {
+	highlightIndex: number;
+	slideIndex: number;
+};
+
+export type StoryAction = 'prev-slide' | 'next-slide' | 'prev-highlight' | 'next-highlight';
+
+export type StoryMove =
+	| { type: 'go'; highlightIndex: number; slideIndex: number }
+	| { type: 'close' }
+	| { type: 'stay' };
+
+export type StoryTarget = {
+	href: string | null;
+	name: string | null;
+};
+
+export function storyHighlights(entries: SakeEntry[]): StoryHighlight[] {
+	return countryHighlights(entries)
+		.map((highlight) => ({
+			...highlight,
+			entries: filterEntries(entries, { country: highlight.country }),
+		}))
+		.filter((highlight) => highlight.entries.length > 0);
+}
+
+export function moveStory(counts: number[], cursor: StoryCursor, action: StoryAction): StoryMove {
+	const current = cursor.highlightIndex;
+	if (action === 'prev-slide') {
+		if (cursor.slideIndex > 0) {
+			return { type: 'go', highlightIndex: current, slideIndex: cursor.slideIndex - 1 };
+		}
+		return { type: 'stay' };
+	}
+	if (action === 'next-slide') {
+		const count = counts[current] ?? 0;
+		if (cursor.slideIndex < count - 1) {
+			return { type: 'go', highlightIndex: current, slideIndex: cursor.slideIndex + 1 };
+		}
+		const neighbor = stepHighlight(counts, current, 1);
+		return neighbor.type === 'go' ? neighbor : { type: 'close' };
+	}
+	const direction = action === 'next-highlight' ? 1 : -1;
+	const neighbor = stepHighlight(counts, current, direction);
+	return neighbor.type === 'go' ? neighbor : { type: 'stay' };
+}
+
+export function storyTarget(
+	stories: StoryHighlight[],
+	cursor: StoryCursor,
+	action: StoryAction,
+): StoryTarget {
+	const move = moveStory(
+		stories.map((story) => story.entries.length),
+		cursor,
+		action,
+	);
+	if (move.type === 'stay') return { href: null, name: null };
+	if (move.type === 'close') return { href: '/', name: null };
+	const story = stories[move.highlightIndex];
+	if (!story) return { href: '/', name: null };
+	return {
+		href: highlightStoryHref(story.country, move.slideIndex + 1),
+		name: story.name,
+	};
+}
+
+function stepHighlight(counts: number[], from: number, direction: 1 | -1): StoryMove {
+	let index = from + direction;
+	while (index >= 0 && index < counts.length && counts[index] === 0) index += direction;
+	if (index < 0 || index >= counts.length) return { type: 'stay' };
+	return { type: 'go', highlightIndex: index, slideIndex: 0 };
 }
 
 function presentLink(raw: unknown): PresentedLink | null {

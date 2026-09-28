@@ -10,14 +10,14 @@ import ViewTabs from '../components/ViewTabs.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { loadCatalog } from '../lib/microcms';
 import { profile } from '../lib/profile';
-import { countryHighlights, highlightHref, homeQuery, profileStats } from '../lib/sake-view';
+import { highlightStoryHref, homeQuery, profileStats, storyHighlights } from '../lib/sake-view';
 
 const catalog = await loadCatalog();
 const entries = catalog.ok ? catalog.entries : [];
-const highlights = countryHighlights(entries).map((item) => ({
-	...item,
-	href: highlightHref(item, { country: null, view: 'grid' }),
-	active: false,
+const highlights = storyHighlights(entries).map((item) => ({
+	name: item.name,
+	initial: item.initial,
+	href: highlightStoryHref(item.country),
 }));
 const emptyMessage = !catalog.ok
 	? catalog.reason === 'config'
@@ -32,7 +32,7 @@ const emptyMessage = !catalog.ok
 	<TopBar username={profile.username} />
 	<ProfileHeader stats={profileStats(entries)} />
 	{highlights.length > 0 && <Highlights items={highlights} />}
-	<ViewTabs gridHref={homeQuery({ view: 'grid' })} listHref={homeQuery({ view: 'list' })} view="grid" />
+	<ViewTabs gridHref={homeQuery()} listHref={homeQuery('list')} view="grid" />
 	{
 		emptyMessage ? (
 			<p class="empty">{emptyMessage}</p>

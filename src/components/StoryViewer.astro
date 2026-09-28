@@ -1,0 +1,304 @@
+---
+import Bottle from './Bottle.astro';
+import Icon from './Icon.astro';
+import { heroImage, transitionName } from '../lib/image';
+import { heroMark } from '../lib/sake-view';
+import type { SakeEntry } from '../lib/types';
+
+interface Props {
+	name: string;
+	initial: string;
+	index: number;
+	count: number;
+	entry: SakeEntry;
+	prevSlideHref: string | null;
+	nextHref: string;
+	prevHighlightHref: string | null;
+	nextHighlightHref: string | null;
+	prevHighlightName: string | null;
+	nextHighlightName: string | null;
+	duration?: number;
+}
+
+const {
+	name,
+	initial,
+	index,
+	count,
+	entry,
+	prevSlideHref,
+	nextHref,
+	prevHighlightHref,
+	nextHighlightHref,
+	prevHighlightName,
+	nextHighlightName,
+	duration = 5000,
+} = Astro.props;
+const mark = heroMark(entry.name);
+const photo = entry.image?.url ? heroImage(entry.image.url) : null;
+const nextLabel = nextHref === '/' ? '閉じる' : '次へ';
+---
+
+<div
+	class="story"
+	data-story
+	data-duration={duration}
+	style={`--story-ms:${duration}ms`}
+>
+	{prevHighlightName && (
+		<div class="story-peek story-peek-prev" aria-hidden="true">
+			{prevHighlightName}
+		</div>
+	)}
+	{nextHighlightName && (
+		<div class="story-peek story-peek-next" aria-hidden="true">
+			{nextHighlightName}
+		</div>
+	)}
+	<div class="story-sheet" data-story-sheet>
+		<div class="story-progress" aria-hidden="true">
+			{
+				Array.from({ length: count }, (_, segment) => {
+					const state = segment < index - 1 ? 'done' : segment === index - 1 ? 'current' : 'todo';
+					return (
+						<span class:list={['seg', `is-${state}`]}>
+							<span class="seg-fill" />
+						</span>
+					);
+				})
+			}
+		</div>
+		<header class="story-meta">
+			<div class="story-id">
+				<span class="story-avatar" aria-hidden="true">
+					{initial}
+				</span>
+				<span class="story-titles">
+					<span class="story-name">{name}</span>
+					<span class="story-count">
+						{index} / {count}
+					</span>
+				</span>
+			</div>
+			<a class="story-close" href="/" data-story-close aria-label="閉じる">
+				<Icon name="x" size={22} />
+			</a>
+		</header>
+		<div class="story-hero" transition:name={transitionName(entry.id)}>
+			{
+				photo ? (
+					<img src={photo.src} srcset={photo.srcset} sizes={photo.sizes} alt="" />
+				) : (
+					<Bottle primary={mark.primary} secondary={mark.secondary} />
+				)
+			}
+		</div>
+		<a class="story-caption" href={`/sake/${entry.id}`}>
+			<span class="story-sake">{entry.name}</span>
+			<span class="story-more">詳しく見る ›</span>
+		</a>
+		{
+			prevSlideHref && (
+				<a class="story-zone story-zone-prev" href={prevSlideHref} data-story-prev aria-label="前へ">
+					<Icon name="chevron-left" size={20} />
+				</a>
+			)
+		}
+		<a class="story-zone story-zone-next" href={nextHref} data-story-next aria-label={nextLabel}>
+			<Icon name="chevron-right" size={20} />
+		</a>
+		{prevHighlightHref && <a href={prevHighlightHref} data-swipe-prev hidden>前のハイライト</a>}
+		{nextHighlightHref && <a href={nextHighlightHref} data-swipe-next hidden>次のハイライト</a>}
+	</div>
+</div>
+
+<script is:inline>
+	(function () {
+		function closestLink(target) {
+			return target && target.closest ? target.closest('a, button') : null;
+		}
+
+		if (!window.__sakeStory) {
+			var storyState = {
+				timer: 0,
+				endsAt: 0,
+				remain: 0,
+				tracking: false,
+				dragged: false,
+				suppressClick: false,
+				startX: 0,
+				startY: 0,
+				activePointer: null,
+			};
+			window.__sakeStory = storyState;
+
+			function root() {
+				return document.querySelector('[data-story]');
+			}
+
+			function clearTimer() {
+				if (storyState.timer) window.clearTimeout(storyState.timer);
+				storyState.timer = 0;
+			}
+
+			function reduced() {
+				return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			}
+
+			function follow(link) {
+				if (!link) return;
+				clearTimer();
+				var href = link.getAttribute('href');
+				if (href) window.location.href = href;
+			}
+
+			function arm(story) {
+				clearTimer();
+				if (reduced()) return;
+				var ms = Number(story.getAttribute('data-duration')) || 5000;
+				storyState.remain = ms;
+				storyState.endsAt = performance.now() + ms;
+				if (!story.querySelector('[data-story-next]')) return;
+				storyState.timer = window.setTimeout(function () {
+					var current = root();
+					follow(current && current.querySelector('[data-story-next]'));
+				}, ms);
+			}
+
+			function pause(story) {
+				if (!storyState.timer || story.classList.contains('is-paused')) return;
+				storyState.remain = Math.max(0, storyState.endsAt - performance.now());
+				clearTimer();
+				story.classList.add('is-paused');
+			}
+
+			function resume(story) {
+				if (!story.classList.contains('is-paused')) return;
+				story.classList.remove('is-paused');
+				if (reduced()) return;
+				storyState.endsAt = performance.now() + storyState.remain;
+				storyState.timer = window.setTimeout(function () {
+					var current = root();
+					follow(current && current.querySelector('[data-story-next]'));
+				}, storyState.remain);
+			}
+
+			function shift(story, dx) {
+				var sheet = story.querySelector('[data-story-sheet]');
+				if (!sheet) return;
+				var limited = dx;
+				if (limited > 0 && !story.querySelector('[data-swipe-prev]')) limited *= 0.25;
+				if (limited < 0 && !story.querySelector('[data-swipe-next]')) limited *= 0.25;
+				limited = Math.max(-160, Math.min(160, limited));
+				sheet.style.transition = 'none';
+				sheet.style.transform = 'translate3d(' + limited + 'px,0,0)';
+			}
+
+			function resetShift(story) {
+				var sheet = story.querySelector('[data-story-sheet]');
+				if (!sheet) return;
+				sheet.style.transition = reduced() ? 'none' : 'transform 180ms ease';
+				sheet.style.transform = '';
+			}
+
+			function onPointerEnd(event) {
+				var story = root();
+				if (!story || !storyState.tracking || event.pointerId !== storyState.activePointer) return;
+				var dx = event.clientX - storyState.startX;
+				storyState.tracking = false;
+				storyState.activePointer = null;
+				if (storyState.dragged && Math.abs(dx) >= 56) {
+					var link = story.querySelector(dx < 0 ? '[data-swipe-next]' : '[data-swipe-prev]');
+					if (link) {
+						storyState.suppressClick = true;
+						follow(link);
+						return;
+					}
+				}
+				storyState.dragged = false;
+				resetShift(story);
+				resume(story);
+			}
+
+			function bind(story) {
+				if (story.getAttribute('data-bound') === 'true') return;
+				story.setAttribute('data-bound', 'true');
+				story.addEventListener('pointerdown', function (event) {
+					if (event.button !== 0) return;
+					storyState.tracking = true;
+					storyState.dragged = false;
+					storyState.startX = event.clientX;
+					storyState.startY = event.clientY;
+					storyState.activePointer = event.pointerId;
+					if (!closestLink(event.target)) {
+						pause(story);
+						if (story.setPointerCapture) story.setPointerCapture(event.pointerId);
+					}
+				});
+				story.addEventListener('pointermove', function (event) {
+					if (!storyState.tracking || event.pointerId !== storyState.activePointer) return;
+					var dx = event.clientX - storyState.startX;
+					var dy = event.clientY - storyState.startY;
+					if (!storyState.dragged && Math.abs(dx) < 10) return;
+					if (!storyState.dragged && Math.abs(dy) > Math.abs(dx)) return;
+					storyState.dragged = true;
+					shift(story, dx);
+				});
+				story.addEventListener('pointerup', onPointerEnd);
+				story.addEventListener('pointercancel', onPointerEnd);
+				story.addEventListener('click', function (event) {
+					if (closestLink(event.target)) clearTimer();
+				});
+				story.addEventListener(
+					'click',
+					function (event) {
+						if (!storyState.suppressClick) return;
+						event.preventDefault();
+						event.stopPropagation();
+						storyState.suppressClick = false;
+					},
+					true,
+				);
+			}
+
+			function boot() {
+				var story = root();
+				if (!story) {
+					clearTimer();
+					return;
+				}
+				if (story.getAttribute('data-armed') === 'true') return;
+				clearTimer();
+				story.setAttribute('data-armed', 'true');
+				bind(story);
+				arm(story);
+			}
+
+			storyState.boot = boot;
+			document.addEventListener('astro:page-load', boot);
+			document.addEventListener('astro:before-preparation', clearTimer);
+			document.addEventListener('visibilitychange', function () {
+				var story = root();
+				if (!story) return;
+				if (document.hidden) pause(story);
+				else resume(story);
+			});
+			document.addEventListener('keydown', function (event) {
+				var story = root();
+				if (!story) return;
+				if (event.altKey || event.metaKey || event.ctrlKey) return;
+				if (event.key === 'Escape') {
+					event.preventDefault();
+					follow(story.querySelector('[data-story-close]'));
+				} else if (event.key === 'ArrowRight') {
+					event.preventDefault();
+					follow(story.querySelector('[data-story-next]'));
+				} else if (event.key === 'ArrowLeft') {
+					event.preventDefault();
+					follow(story.querySelector('[data-story-prev]'));
+				}
+			});
+		}
+		window.__sakeStory.boot();
+	})();
+</script>
