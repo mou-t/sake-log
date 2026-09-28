@@ -69,20 +69,10 @@
               "id": "eU04f",
               "name": "Username",
               "fill": "$text-primary",
-              "content": "shunta",
+              "content": "お酒メモ",
               "fontFamily": "Inter",
               "fontSize": 16,
               "fontWeight": "700"
-            },
-            {
-              "type": "icon",
-              "id": "PWab5",
-              "name": "Menu",
-              "width": 22,
-              "height": 22,
-              "icon": "menu",
-              "library": "lucide",
-              "fill": "$text-primary"
             }
           ]
         },
@@ -260,7 +250,7 @@
                   "fill": "$text-secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "飲んだお酒のメモ · by Shunta",
+                  "content": "飲んだお酒のメモ",
                   "fontFamily": "Noto Sans JP",
                   "fontSize": 13,
                   "fontWeight": "normal"
@@ -1256,24 +1246,10 @@
             },
             {
               "type": "frame",
-              "id": "w9rD24",
-              "name": "More",
+              "id": "aopmz",
+              "name": "Trailing Spacer",
               "width": 40,
-              "height": 40,
-              "justifyContent": "center",
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "icon",
-                  "id": "vxZne",
-                  "name": "More Icon",
-                  "width": 22,
-                  "height": 22,
-                  "icon": "ellipsis",
-                  "library": "lucide",
-                  "fill": "$text-primary"
-                }
-              ]
+              "height": 40
             }
           ]
         },
@@ -2006,7 +1982,7 @@
           "width": "fill_container",
           "fill": "#2A2622",
           "layout": "vertical",
-          "gap": 10,
+          "gap": 12,
           "padding": [
             16,
             20,
@@ -2020,7 +1996,7 @@
               "name": "Caption Texts",
               "width": "fill_container",
               "layout": "vertical",
-              "gap": 4,
+              "gap": 10,
               "children": [
                 {
                   "type": "text",
@@ -2031,6 +2007,74 @@
                   "fontFamily": "Noto Sans JP",
                   "fontSize": 18,
                   "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "gBPad",
+                  "name": "Chip Row",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "yAxIJ",
+                      "name": "Country Chip",
+                      "fill": "#3F3A35",
+                      "cornerRadius": 999,
+                      "gap": 6,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "O65lP5",
+                          "name": "Pin",
+                          "width": 12,
+                          "height": 12,
+                          "icon": "map-pin",
+                          "library": "lucide",
+                          "fill": "#C8BFB0"
+                        },
+                        {
+                          "type": "text",
+                          "id": "qUHli",
+                          "name": "Country",
+                          "fill": "#C8BFB0",
+                          "content": "日本",
+                          "fontFamily": "Noto Sans JP",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "FNJLj",
+                      "name": "Place Chip",
+                      "fill": "#3F3A35",
+                      "cornerRadius": 999,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "u8yOKA",
+                          "name": "Place",
+                          "fill": "#C8BFB0",
+                          "content": "三重県",
+                          "fontFamily": "Noto Sans JP",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
                   "type": "text",
@@ -2448,7 +2492,7 @@
               "width": "fill_container",
               "fill": "#2A2622",
               "layout": "vertical",
-              "gap": 8,
+              "gap": 10,
               "padding": [
                 16,
                 20,
@@ -2465,6 +2509,74 @@
                   "fontFamily": "Noto Sans JP",
                   "fontSize": 18,
                   "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "tqYSf",
+                  "name": "Chip Row",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "nMaFL",
+                      "name": "Country Chip",
+                      "fill": "#3F3A35",
+                      "cornerRadius": 999,
+                      "gap": 6,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "ax3HO",
+                          "name": "Pin",
+                          "width": 12,
+                          "height": 12,
+                          "icon": "map-pin",
+                          "library": "lucide",
+                          "fill": "#C8BFB0"
+                        },
+                        {
+                          "type": "text",
+                          "id": "PmHmH",
+                          "name": "Country",
+                          "fill": "#C8BFB0",
+                          "content": "フランス",
+                          "fontFamily": "Noto Sans JP",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "xCFFP",
+                      "name": "Place Chip",
+                      "fill": "#3F3A35",
+                      "cornerRadius": 999,
+                      "padding": [
+                        6,
+                        12
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "MqeiN",
+                          "name": "Place",
+                          "fill": "#C8BFB0",
+                          "content": "シャンパーニュ",
+                          "fontFamily": "Noto Sans JP",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
                   "type": "text",
